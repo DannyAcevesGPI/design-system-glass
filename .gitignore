@@ -1,0 +1,16 @@
+# Dependencias
+node_modules/
+
+# Artefactos locales
+*.log
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Entornos
+.env
+.env.*

@@ -1,0 +1,62 @@
+{
+  "name": "@dannyaceves/design-system-glass",
+  "version": "2.0.0",
+  "private": false,
+  "description": "Design System Glass: sistema de diseño de vidrio con tokens, componentes accesibles y documentación lista para agentes.",
+  "author": "Daniel Aceves",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DannyAcevesGPI/design-system-glass.git"
+  },
+  "homepage": "https://github.com/DannyAcevesGPI/design-system-glass#readme",
+  "bugs": {
+    "url": "https://github.com/DannyAcevesGPI/design-system-glass/issues"
+  },
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate": "node scripts/build.mjs --check && node scripts/validate.mjs",
+    "check": "npm run validate",
+    "serve": "python3 -m http.server 4173",
+    "codemod": "node scripts/codemod-v1-to-v2.mjs",
+    "pack:check": "npm pack --dry-run"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "TRADEMARKS.md",
+    "tokens.css",
+    "tokens.json",
+    "components/bundle.css",
+    "components/registry.json",
+    "components/registry.schema.json",
+    "schema/tokens.schema.json",
+    "tailwind/dsg-preset.js",
+    "tailwind/globals.css",
+    "tailwind/play-config.js",
+    "assets/brand",
+    "assets/fonts"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "*.css",
+    "tailwind/dsg-preset.js",
+    "tailwind/play-config.js"
+  ],
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "glassmorphism",
+    "liquid-glass",
+    "tailwindcss",
+    "accessibility",
+    "ai-ready"
+  ]
+}
