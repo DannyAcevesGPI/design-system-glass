@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-system-glass.dev/schema/registry.schema.json",
+  "title": "Design System Glass component registry",
+  "type": "object",
+  "required": ["name", "version", "prefix", "components"],
+  "properties": {
+    "name": { "type": "string", "const": "Design System Glass" },
+    "version": { "type": "integer", "minimum": 1 },
+    "prefix": { "type": "string", "const": "dsg-" },
+    "updated": { "type": "string", "format": "date" },
+    "status": { "enum": ["alpha", "beta", "stable", "deprecated"] },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "status", "summary", "files", "classes", "useWhen", "avoidWhen", "accessibility", "example"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "status": { "enum": ["alpha", "beta", "stable", "deprecated"] },
+          "since": { "type": "string" },
+          "summary": { "type": "string" },
+          "files": {
+            "type": "object",
+            "required": ["readme", "preview"],
+            "properties": {
+              "readme": { "type": "string" },
+              "preview": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "classes": { "type": "array", "items": { "type": "string", "pattern": "^\\.dsg-[a-z0-9_-]+$" } },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "when"],
+              "properties": {
+                "name": { "type": "string" },
+                "class": { "type": "string" },
+                "when": { "type": "string" }
+              }
+            }
+          },
+          "useWhen": { "type": "array", "items": { "type": "string" } },
+          "avoidWhen": { "type": "array", "items": { "type": "string" } },
+          "composition": { "type": "array", "items": { "type": "string" } },
+          "accessibility": { "type": "array", "items": { "type": "string" } },
+          "example": { "type": "string" },
+          "related": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

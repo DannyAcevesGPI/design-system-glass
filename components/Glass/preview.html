@@ -1,0 +1,31 @@
+<!-- @dsCard group="Superficies" height=260 subtitle="Card, panel e inset" -->
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Glass — vista previa</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../bundle.css">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<script src="../../tailwind/vendor/tailwind-play-3.4.17.js"></script>
+<script src="../../tailwind/play-config.js"></script>
+</head>
+<body class="dsg-mesh" style="margin:0">
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:24px">
+  <article class="dsg-glass" style="padding:24px;display:flex;flex-direction:column;gap:8px">
+    <span class="dsg-overline">.dsg-glass</span>
+    <h3 style="margin:0;font:700 20px/1.25 var(--dsg-font-display)">Card de vidrio</h3>
+    <p class="dsg-muted" style="margin:0;font-size:14px">Relleno translúcido, borde de luz y desenfoque del fondo.</p>
+  </article>
+  <section class="dsg-glass dsg-glass--panel" style="padding:24px;display:flex;flex-direction:column;gap:12px">
+    <span class="dsg-overline">.dsg-glass--panel</span>
+    <div class="dsg-inset" style="padding:14px;font-size:14px">.dsg-inset · fila elevada</div>
+    <div class="dsg-inset" style="padding:14px;font-size:14px">Otra fila</div>
+  </section>
+  <section class="rounded-panel border border-glass-rim bg-glass shadow-glass backdrop-blur-xl" style="padding:24px;display:flex;flex-direction:column;gap:8px">
+    <span class="dsg-overline">Utilidades Tailwind</span>
+    <code style="font:400 12px/1.5 var(--dsg-font-mono);color:var(--dsg-ink-muted)">rounded-panel border border-glass-rim bg-glass shadow-glass backdrop-blur-xl</code>
+  </section>
+</div>
+</body>
+</html>

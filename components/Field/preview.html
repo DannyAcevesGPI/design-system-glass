@@ -1,0 +1,28 @@
+<!-- @dsCard group="Formularios" height=420 subtitle="Campos del formulario de contacto" -->
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Field — vista previa</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../bundle.css">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<script src="../../tailwind/vendor/tailwind-play-3.4.17.js"></script>
+<script src="../../tailwind/play-config.js"></script>
+</head>
+<body class="dsg-mesh" style="margin:0">
+<form class="dsg-glass dsg-glass--panel" style="margin:20px;padding:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px" onsubmit="event.preventDefault()">
+  <label class="dsg-field" for="f-nombre">Nombre completo
+    <input id="f-nombre" class="dsg-input" type="text" autocomplete="name" placeholder="Nombre y apellidos"></label>
+  <label class="dsg-field" for="f-correo">Correo institucional
+    <input id="f-correo" class="dsg-input" type="email" autocomplete="email"></label>
+  <label class="dsg-field" for="f-area">Área
+    <select id="f-area" class="dsg-input"><option>Selecciona tu área</option><option>Finanzas</option></select></label>
+  <label class="dsg-field" for="f-proyecto">Proyecto relacionado <span class="dsg-field__hint">(opcional)</span>
+    <select id="f-proyecto" class="dsg-input"><option>Ninguno</option></select></label>
+  <label class="dsg-field" for="f-msg" style="grid-column:1 / -1">Mensaje
+    <textarea id="f-msg" class="dsg-input" rows="3"></textarea>
+    <span class="dsg-field__hint">Entre 20 y 2000 caracteres.</span></label>
+</form>
+</body>
+</html>

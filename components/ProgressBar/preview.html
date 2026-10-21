@@ -1,0 +1,25 @@
+<!-- @dsCard group="Datos" height=170 subtitle="Progreso de proyecto en card y en detalle" -->
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>ProgressBar — vista previa</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../bundle.css">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<script src="../../tailwind/vendor/tailwind-play-3.4.17.js"></script>
+<script src="../../tailwind/play-config.js"></script>
+</head>
+<body class="dsg-mesh" style="margin:0">
+<div class="dsg-glass" style="margin:20px;padding:22px;display:flex;flex-direction:column;gap:18px">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between;font-size:13px" class="dsg-muted"><span>Impacto esperado: reducir tiempos</span><span>45%</span></div>
+    <div class="dsg-progress" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45"><div class="dsg-progress__bar" style="width:45%"></div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-weight:600">Progreso general</span><span style="font:700 28px/1 var(--dsg-font-display)">70%</span></div>
+    <div class="dsg-progress dsg-progress--lg" role="progressbar" aria-label="Progreso general" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70"><div class="dsg-progress__bar dsg-progress__bar--gradient" style="width:70%"></div></div>
+  </div>
+</div>
+</body>
+</html>

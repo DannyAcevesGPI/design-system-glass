@@ -1,0 +1,511 @@
+{
+  "$schema": "./registry.schema.json",
+  "name": "Design System Glass",
+  "version": 2,
+  "prefix": "dsg-",
+  "updated": "2026-10-21",
+  "status": "stable",
+  "components": [
+    {
+      "id": "cover",
+      "name": "Cover",
+      "status": "stable",
+      "since": "2.0.0",
+      "summary": "Portada de marca con el hero de vidrio y el átomo animado.",
+      "files": {
+        "readme": "components/Cover/README.md",
+        "preview": "components/Cover/preview.html"
+      },
+      "classes": [],
+      "variants": [],
+      "useWhen": [
+        "En la galería o en una página de inicio que presente el sistema.",
+        "En material de marca que necesite el hero con el átomo."
+      ],
+      "avoidWhen": [
+        "Como cabecera de una pantalla de producto.",
+        "En contextos donde el átomo compita con datos o acciones."
+      ],
+      "composition": [
+        "Fondo con gradiente y manchas; texto a la izquierda; átomo a la derecha.",
+        "Una acción primaria y una secundaria como máximo."
+      ],
+      "accessibility": [
+        "El átomo es decorativo: aria-hidden y alt vacío.",
+        "El texto mantiene contraste 4.5:1 sobre el fondo.",
+        "Con prefers-reduced-motion el átomo queda estático."
+      ],
+      "example": "<img src=\"assets/brand/banner.svg\" alt=\"Design System Glass\">",
+      "related": ["Glass", "Button"]
+    },
+    {
+      "id": "glass",
+      "name": "Glass",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Superficie translúcida base: cards, paneles, menú lateral, hero y modales.",
+      "files": {
+        "readme": "components/Glass/README.md",
+        "preview": "components/Glass/preview.html"
+      },
+      "classes": [
+        ".dsg-glass",
+        ".dsg-glass--panel",
+        ".dsg-glass--hero",
+        ".dsg-inset",
+        ".dsg-mesh",
+        ".dsg-mesh--admin"
+      ],
+      "variants": [
+        { "name": "card", "class": ".dsg-glass", "when": "Card por defecto, radio 22px." },
+        { "name": "panel", "class": ".dsg-glass--panel", "when": "Paneles grandes y menú lateral, radio 26px." },
+        { "name": "hero", "class": ".dsg-glass--hero", "when": "Solo el hero de una página, radio 32px." },
+        { "name": "inset", "class": ".dsg-inset", "when": "Fila o elemento elevado dentro de otro vidrio." }
+      ],
+      "useWhen": [
+        "Para agrupar contenido sobre el fondo de manchas .dsg-mesh.",
+        "Cuando se necesita jerarquía sin sumar otro nivel de vidrio."
+      ],
+      "avoidWhen": [
+        "Sin color detrás: el vidrio se ve plano, sobre todo en claro.",
+        "Anidando .dsg-glass dentro de .dsg-glass; usa .dsg-inset."
+      ],
+      "composition": [
+        "Toda página que use vidrio lleva .dsg-mesh en el body.",
+        "La jerarquía es hero > panel > glass > inset."
+      ],
+      "accessibility": [
+        "El texto usa ink, ink-muted o ink-subtle, todos con 4.5:1.",
+        "No uses el vidrio como única señal de agrupación; acompaña con títulos."
+      ],
+      "example": "<article class=\"dsg-glass\" style=\"padding:24px\">…</article>",
+      "related": ["Button", "Scorecard", "Notice"]
+    },
+    {
+      "id": "button",
+      "name": "Button",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Botones pill para acciones primarias y botones de decisión para revisión.",
+      "files": {
+        "readme": "components/Button/README.md",
+        "preview": "components/Button/preview.html"
+      },
+      "classes": [
+        ".dsg-btn",
+        ".dsg-btn--primary",
+        ".dsg-btn--secondary",
+        ".dsg-btn--ghost",
+        ".dsg-btn--success",
+        ".dsg-btn--danger",
+        ".dsg-btn--icon"
+      ],
+      "variants": [
+        { "name": "primary", "class": ".dsg-btn--primary", "when": "Una sola acción principal por vista." },
+        { "name": "secondary", "class": ".dsg-btn--secondary", "when": "Acción alternativa junto a la principal." },
+        { "name": "ghost", "class": ".dsg-btn--ghost", "when": "Cancelar o acción de baja prioridad." },
+        { "name": "success", "class": ".dsg-btn--success", "when": "Aprobar y publicar en un flujo de revisión." },
+        { "name": "danger", "class": ".dsg-btn--danger", "when": "Rechazar o destruir; contorno, nunca relleno." },
+        { "name": "icon", "class": ".dsg-btn--icon", "when": "Solo ícono, 44×44; requiere aria-label." }
+      ],
+      "useWhen": [
+        "Para ejecutar una acción o navegar a otra página.",
+        "Para confirmar o rechazar una propuesta en revisión."
+      ],
+      "avoidWhen": [
+        "Como div con onClick: usa button o a href.",
+        "Para dos acciones primarias en la misma vista."
+      ],
+      "composition": [
+        "Primario + secundario/ghost es la pareja estándar.",
+        "El texto nombra la acción: «Enviar solicitud», no «Aceptar»."
+      ],
+      "accessibility": [
+        "Altura mínima 48px; 44px en botones de ícono.",
+        "Foco visible de 2px en accent con offset 3px.",
+        "Un botón solo con ícono lleva aria-label."
+      ],
+      "example": "<button class=\"dsg-btn dsg-btn--primary\">Explorar componentes</button>",
+      "related": ["Glass", "SegmentedControl"]
+    },
+    {
+      "id": "segmented-control",
+      "name": "SegmentedControl",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Grupo de 2 a 4 opciones excluyentes para cambiar de vista o periodo.",
+      "files": {
+        "readme": "components/SegmentedControl/README.md",
+        "preview": "components/SegmentedControl/preview.html"
+      },
+      "classes": [".dsg-seg", ".dsg-seg__btn"],
+      "variants": [
+        { "name": "tabs", "class": ".dsg-seg__btn[aria-selected=\"true\"]", "when": "Cambia la vista visible; usa role=tablist y role=tab." },
+        { "name": "filter", "class": ".dsg-seg__btn[aria-pressed=\"true\"]", "when": "Filtra un periodo; usa role=group y aria-pressed." }
+      ],
+      "useWhen": [
+        "Para 2 a 4 opciones excluyentes y visibles al mismo tiempo.",
+        "Para alternar entre vistas o periodos sin salir de la página."
+      ],
+      "avoidWhen": [
+        "Con más de 4 opciones: usa un select.",
+        "Para navegación entre páginas: usa NavItem."
+      ],
+      "composition": [
+        "Contenedor .dsg-glass .dsg-seg.",
+        "La opción activa usa accent + on-accent; las demás, ink-muted."
+      ],
+      "accessibility": [
+        "Vistas: role=tablist, role=tab y aria-selected.",
+        "Filtros: role=group con aria-label y aria-pressed.",
+        "Objetivo táctil mínimo 42px."
+      ],
+      "example": "<div role=\"tablist\" class=\"dsg-glass dsg-seg\"><button role=\"tab\" aria-selected=\"true\" class=\"dsg-seg__btn\">Vista</button></div>",
+      "related": ["Button", "Glass"]
+    },
+    {
+      "id": "nav-item",
+      "name": "NavItem",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Elemento del menú lateral con ícono, estado activo y contador opcional.",
+      "files": {
+        "readme": "components/NavItem/README.md",
+        "preview": "components/NavItem/preview.html"
+      },
+      "classes": [".dsg-nav-item", ".dsg-nav-count"],
+      "variants": [
+        { "name": "default", "class": ".dsg-nav-item", "when": "Enlace inactivo del menú." },
+        { "name": "active", "class": ".dsg-nav-item[aria-current=\"page\"]", "when": "Página actual; fondo glass-strong, texto ink e ícono accent." },
+        { "name": "count", "class": ".dsg-nav-count", "when": "Elementos que piden acción: revisiones o solicitudes pendientes." }
+      ],
+      "useWhen": [
+        "En el menú lateral de una aplicación o documentación.",
+        "Para agrupar navegación con .dsg-overline."
+      ],
+      "avoidWhen": [
+        "Para acciones que no navegan: usa Button.",
+        "Para el menú principal horizontal de marketing."
+      ],
+      "composition": [
+        "Vive dentro de .dsg-glass--panel.",
+        "Ícono de 20px, trazo 1.8 y aria-hidden; el texto siempre visible."
+      ],
+      "accessibility": [
+        "El activo lleva aria-current=\"page\".",
+        "El contador no reemplaza el texto; el enlace sigue siendo descriptivo.",
+        "En móvil se apila y se colapsa en un botón de menú."
+      ],
+      "example": "<a href=\"#\" aria-current=\"page\" class=\"dsg-nav-item\">Proyectos</a>",
+      "related": ["Glass", "StatusChip"]
+    },
+    {
+      "id": "status-chip",
+      "name": "StatusChip",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Chip de estado para proyectos, propuestas y roles, más el tag neutro de categorías.",
+      "files": {
+        "readme": "components/StatusChip/README.md",
+        "preview": "components/StatusChip/preview.html"
+      },
+      "classes": [
+        ".dsg-chip",
+        ".dsg-chip--accent",
+        ".dsg-chip--warm",
+        ".dsg-chip--success",
+        ".dsg-chip--danger",
+        ".dsg-chip--admin",
+        ".dsg-tag"
+      ],
+      "variants": [
+        { "name": "neutral", "class": ".dsg-chip", "when": "Planeado, Borrador, Por definir." },
+        { "name": "accent", "class": ".dsg-chip--accent", "when": "En desarrollo." },
+        { "name": "warm", "class": ".dsg-chip--warm", "when": "Piloto, Pendiente de revisión." },
+        { "name": "success", "class": ".dsg-chip--success", "when": "Liberado, Aprobada, Publicada." },
+        { "name": "danger", "class": ".dsg-chip--danger", "when": "Bloqueado, Cambios solicitados, Rechazada." },
+        { "name": "admin", "class": ".dsg-chip--admin", "when": "Rol ADMIN o superficie administrativa." },
+        { "name": "tag", "class": ".dsg-tag", "when": "Categorías y skills; no comunica estado." }
+      ],
+      "useWhen": [
+        "Para comunicar un estado con texto y color.",
+        "Para clasificar contenido con .dsg-tag."
+      ],
+      "avoidWhen": [
+        "Como único portador de un estado: el texto es obligatorio.",
+        "Para acciones: usa Button."
+      ],
+      "composition": [
+        "El color sale de --c; relleno al 15% y borde al 35%.",
+        "El tag no comparte la semántica de estado del chip."
+      ],
+      "accessibility": [
+        "El texto del chip siempre está presente.",
+        "No dependas solo del color para distinguir estados."
+      ],
+      "example": "<span class=\"dsg-chip dsg-chip--accent\">En desarrollo</span>",
+      "related": ["DateBadge", "Notice"]
+    },
+    {
+      "id": "date-badge",
+      "name": "DateBadge",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Distingue una fecha comprometida de una estimada.",
+      "files": {
+        "readme": "components/DateBadge/README.md",
+        "preview": "components/DateBadge/preview.html"
+      },
+      "classes": [".dsg-date", ".dsg-date--confirmed", ".dsg-date--estimated"],
+      "variants": [
+        { "name": "confirmed", "class": ".dsg-date--confirmed", "when": "Fecha aprobada como compromiso; borde sólido success." },
+        { "name": "estimated", "class": ".dsg-date--estimated", "when": "Fecha estimada; borde punteado ink-subtle." }
+      ],
+      "useWhen": [
+        "En lanzamientos, roadmap y detalle de proyecto.",
+        "Cuando la precisión de la fecha importa para decidir."
+      ],
+      "avoidWhen": [
+        "Para fechas históricas ya cumplidas.",
+        "Para rangos que no son compromisos ni estimaciones."
+      ],
+      "composition": [
+        "El texto siempre dice «Confirmada» o «Estimada».",
+        "Una fecha estimada usa mes o trimestre, no día exacto."
+      ],
+      "accessibility": [
+        "El tipo de borde refuerza, no sustituye, el texto.",
+        "La leyenda sólida/punteada aparece una vez por sección."
+      ],
+      "example": "<span class=\"dsg-date dsg-date--estimated\">Q2 2027 · Estimada</span>",
+      "related": ["StatusChip", "ProgressBar"]
+    },
+    {
+      "id": "notice",
+      "name": "Notice",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Aviso con severidad para bloqueos, dependencias, comunicados y confirmaciones.",
+      "files": {
+        "readme": "components/Notice/README.md",
+        "preview": "components/Notice/preview.html"
+      },
+      "classes": [
+        ".dsg-notice",
+        ".dsg-notice--danger",
+        ".dsg-notice--warning",
+        ".dsg-notice--neutral",
+        ".dsg-notice--success",
+        ".dsg-notice__kind",
+        ".dsg-notice__title",
+        ".dsg-notice__body"
+      ],
+      "variants": [
+        { "name": "danger", "class": ".dsg-notice--danger", "when": "Bloqueo o rechazo." },
+        { "name": "warning", "class": ".dsg-notice--warning", "when": "Dependencia crítica o alerta operativa." },
+        { "name": "neutral", "class": ".dsg-notice--neutral", "when": "Comunicado o aviso del área." },
+        { "name": "success", "class": ".dsg-notice--success", "when": "Confirmación sin conflictos o publicación." }
+      ],
+      "useWhen": [
+        "Para comunicar una condición que cambia lo que la persona puede hacer.",
+        "Para ordenar bloqueos antes que avisos menores."
+      ],
+      "avoidWhen": [
+        "Para texto meramente informativo que no requiere atención.",
+        "Para errores de validación de un campo: usa Field."
+      ],
+      "composition": [
+        "Ícono 22px + __kind + __title + __body opcional.",
+        "Ordena por severidad: bloqueos primero."
+      ],
+      "accessibility": [
+        "La severidad se lee en __kind, no solo en el color.",
+        "Los mensajes de estado en vivo usan role=status."
+      ],
+      "example": "<div class=\"dsg-notice dsg-notice--warning\"><span class=\"dsg-notice__kind\">Dependencia</span><p class=\"dsg-notice__title\">Espera aprobación de Seguridad.</p></div>",
+      "related": ["StatusChip", "Diff"]
+    },
+    {
+      "id": "scorecard",
+      "name": "Scorecard",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Indicador numérico con etiqueta, valor y nota de contexto.",
+      "files": {
+        "readme": "components/Scorecard/README.md",
+        "preview": "components/Scorecard/preview.html"
+      },
+      "classes": [".dsg-kpi", ".dsg-kpi__label", ".dsg-kpi__value", ".dsg-kpi__note", ".dsg-dot"],
+      "variants": [
+        { "name": "standard", "class": ".dsg-kpi", "when": "Indicador con dato real." },
+        { "name": "demonstrative", "class": ".dsg-kpi", "when": "Dato aún no calculado; badge «Demostrativo» y valor «—»." }
+      ],
+      "useWhen": [
+        "Para resumir métricas de una vista o panel.",
+        "Cuando la nota explica qué cuenta el número."
+      ],
+      "avoidWhen": [
+        "Para inventar un número cuando no hay dato: usa «—».",
+        "Para series temporales complejas: usa una visualización dedicada."
+      ],
+      "composition": [
+        "Grid de 4 en escritorio con auto-fit minmax(230px, 1fr).",
+        "El punto .dsg-dot identifica la serie y es decorativo."
+      ],
+      "accessibility": [
+        "El valor no depende solo del color; la etiqueta y la nota lo explican.",
+        "Si la card entera navega, usa un enlace real."
+      ],
+      "example": "<article class=\"dsg-glass dsg-kpi\"><span class=\"dsg-kpi__label\">Proyectos activos</span><strong class=\"dsg-kpi__value\">24</strong><span class=\"dsg-kpi__note\">Con al menos un hito en curso.</span></article>",
+      "related": ["Glass", "ProgressBar"]
+    },
+    {
+      "id": "progress-bar",
+      "name": "ProgressBar",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Barra de avance de un proyecto, con variante compacta y grande.",
+      "files": {
+        "readme": "components/ProgressBar/README.md",
+        "preview": "components/ProgressBar/preview.html"
+      },
+      "classes": [".dsg-progress", ".dsg-progress--lg", ".dsg-progress__bar", ".dsg-progress__bar--gradient"],
+      "variants": [
+        { "name": "card", "class": ".dsg-progress", "when": "6px, dentro de cards; color según estado con --c." },
+        { "name": "large", "class": ".dsg-progress--lg", "when": "10px, en detalle; puede usar el gradiente accent → success." }
+      ],
+      "useWhen": [
+        "Cuando el avance se calcula a partir de hitos completados.",
+        "Para comparar el estado de varios proyectos en una lista."
+      ],
+      "avoidWhen": [
+        "Cuando no hay una base de cálculo: omite la barra.",
+        "Como decoración sin valor ni etiqueta."
+      ],
+      "composition": [
+        "Siempre con el porcentaje escrito en texto.",
+        "El gradiente se reserva para el detalle."
+      ],
+      "accessibility": [
+        "role=progressbar con aria-valuenow, aria-valuemin, aria-valuemax y aria-label.",
+        "El porcentaje visible evita depender solo de la longitud."
+      ],
+      "example": "<div class=\"dsg-progress\" role=\"progressbar\" aria-valuenow=\"64\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-label=\"Avance del proyecto\"><div class=\"dsg-progress__bar\" style=\"width:64%\"></div></div>",
+      "related": ["StatusChip", "Scorecard"]
+    },
+    {
+      "id": "news-ticker",
+      "name": "NewsTicker",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Cinta de actualizaciones que corre al pie de un hero.",
+      "files": {
+        "readme": "components/NewsTicker/README.md",
+        "preview": "components/NewsTicker/preview.html"
+      },
+      "classes": [
+        ".dsg-ticker",
+        ".dsg-ticker__label",
+        ".dsg-ticker__viewport",
+        ".dsg-ticker__track",
+        ".dsg-ticker__item",
+        ".dsg-ticker__kind",
+        ".dsg-ticker__controls"
+      ],
+      "variants": [
+        { "name": "default", "class": ".dsg-ticker", "when": "Cinta continua con etiqueta fija y control de pausa." }
+      ],
+      "useWhen": [
+        "Para 3 a 5 actualizaciones publicadas y recientes.",
+        "Cuando el contenido puede pausarse y tiene una lista completa alternativa."
+      ],
+      "avoidWhen": [
+        "Para contenido crítico que no debe perderse.",
+        "Para más de 5 ítems o contenido no publicado."
+      ],
+      "composition": [
+        "Etiqueta «Al día» en accent-warm + on-accent.",
+        "La lista se duplica para el bucle; la copia lleva aria-hidden."
+      ],
+      "accessibility": [
+        "Botón de pausa obligatorio de 44px con aria-label que cambia.",
+        "La animación se detiene con prefers-reduced-motion.",
+        "Máximo 5 ítems y enlace «Ver todas»."
+      ],
+      "example": "<div class=\"dsg-ticker\"><span class=\"dsg-ticker__label\">Al día</span><div class=\"dsg-ticker__viewport\"><ul class=\"dsg-ticker__track\">…</ul></div></div>",
+      "related": ["Notice", "Glass"]
+    },
+    {
+      "id": "field",
+      "name": "Field",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Campo de formulario con etiqueta visible, control de vidrio y ayuda opcional.",
+      "files": {
+        "readme": "components/Field/README.md",
+        "preview": "components/Field/preview.html"
+      },
+      "classes": [".dsg-field", ".dsg-field__hint", ".dsg-input"],
+      "variants": [
+        { "name": "input", "class": ".dsg-input", "when": "Texto corto, correo, URL." },
+        { "name": "select", "class": ".dsg-input", "when": "Opciones excluyentes cuando no caben en un SegmentedControl." },
+        { "name": "textarea", "class": ".dsg-input", "when": "Texto largo; altura mínima 112px." },
+        { "name": "error", "class": ".dsg-input", "when": "Borde y texto en danger, enlazado con aria-describedby." }
+      ],
+      "useWhen": [
+        "Para cualquier entrada de datos del usuario.",
+        "Cuando la etiqueta y la ayuda explican qué se espera."
+      ],
+      "avoidWhen": [
+        "Usando el placeholder como etiqueta.",
+        "Para opciones excluyentes visibles: usa radios en tarjetas o SegmentedControl."
+      ],
+      "composition": [
+        "Toda entrada va dentro de label.dsg-field o enlazada con for/id.",
+        "Opcional se marca «(opcional)»; el resto es obligatorio."
+      ],
+      "accessibility": [
+        "Etiqueta visible siempre.",
+        "Errores con aria-describedby y texto que dice qué corregir.",
+        "Dos columnas en escritorio, una en móvil."
+      ],
+      "example": "<label class=\"dsg-field\">Nombre<input class=\"dsg-input\" name=\"nombre\"></label>",
+      "related": ["Button", "Notice"]
+    },
+    {
+      "id": "diff",
+      "name": "Diff",
+      "status": "stable",
+      "since": "1.0.0",
+      "summary": "Comparación campo por campo entre una versión publicada y una propuesta.",
+      "files": {
+        "readme": "components/Diff/README.md",
+        "preview": "components/Diff/preview.html"
+      },
+      "classes": [".dsg-del", ".dsg-ins"],
+      "variants": [
+        { "name": "removed", "class": ".dsg-del", "when": "Texto eliminado; usa <del>." },
+        { "name": "added", "class": ".dsg-ins", "when": "Texto agregado; usa <ins>." }
+      ],
+      "useWhen": [
+        "Para revisar cambios propuestos antes de publicar.",
+        "Cuando cambian varios campos y hay que verlos juntos."
+      ],
+      "avoidWhen": [
+        "Para historial de versiones completo: usa una vista de historial.",
+        "Para cambios que no son de texto campo por campo."
+      ],
+      "composition": [
+        "Tres columnas: campo, publicado, propuesta; en móvil se apilan.",
+        "Solo los campos que cambiaron y su conteo en el título."
+      ],
+      "accessibility": [
+        "Usa <del> e <ins> para que el lector anuncie eliminado/agregado.",
+        "Tachado y subrayado distinguen sin depender del color.",
+        "Un Notice encima indica conflictos con la versión publicada."
+      ],
+      "example": "<del class=\"dsg-del\">Texto anterior</del> <ins class=\"dsg-ins\">Texto nuevo</ins>",
+      "related": ["Notice", "Button"]
+    }
+  ]
+}

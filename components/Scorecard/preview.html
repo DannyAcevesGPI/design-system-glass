@@ -1,0 +1,32 @@
+<!-- @dsCard group="Datos" height=230 subtitle="Indicadores de Inicio y del panel" -->
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Scorecard — vista previa</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../bundle.css">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<script src="../../tailwind/vendor/tailwind-play-3.4.17.js"></script>
+<script src="../../tailwind/play-config.js"></script>
+</head>
+<body class="dsg-mesh" style="margin:0">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;padding:20px">
+  <div class="dsg-glass dsg-kpi">
+    <span class="dsg-kpi__label">Proyectos activos<span class="dsg-dot" aria-hidden="true"></span></span>
+    <span class="dsg-kpi__value">12</span>
+    <span class="dsg-kpi__note">En planeación, desarrollo o piloto</span>
+  </div>
+  <div class="dsg-glass dsg-kpi">
+    <span class="dsg-kpi__label">Soluciones liberadas<span class="dsg-dot" style="--c:var(--dsg-success)" aria-hidden="true"></span></span>
+    <span class="dsg-kpi__value">8</span>
+    <span class="dsg-kpi__note">Finalizadas y en operación</span>
+  </div>
+  <div class="dsg-glass dsg-kpi">
+    <span class="dsg-kpi__label">Impacto acumulado<span class="dsg-date dsg-date--estimated" style="height:24px;font-size:11px;color:var(--dsg-warning);border-color:var(--dsg-warning)">Demostrativo</span></span>
+    <span class="dsg-kpi__value">—</span>
+    <span class="dsg-kpi__note">Se calculará con métricas reales</span>
+  </div>
+</div>
+</body>
+</html>

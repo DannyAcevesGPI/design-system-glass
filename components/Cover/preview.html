@@ -1,0 +1,64 @@
+<!-- @dsCard height=288 group="Marca" subtitle="Hero de marca con átomo animado" -->
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Cover — Design System Glass</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../bundle.css">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<script src="../../tailwind/play-config.js"></script>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--dsg-canvas); color:var(--dsg-ink); font-family:var(--dsg-font-sans); overflow:hidden; }
+  .cover {
+    position:relative; width:100%; max-width:960px; height:288px; margin:0 auto; overflow:hidden;
+    display:flex; align-items:center; gap:24px; padding:0 40px; box-sizing:border-box;
+    background:
+      radial-gradient(620px 360px at 8% -20%, color-mix(in srgb, var(--dsg-accent) 30%, transparent), transparent 62%),
+      radial-gradient(560px 360px at 94% 10%, color-mix(in srgb, var(--dsg-success) 18%, transparent), transparent 60%),
+      radial-gradient(480px 300px at 80% 120%, color-mix(in srgb, var(--dsg-accent-warm) 10%, transparent), transparent 60%),
+      linear-gradient(135deg, var(--dsg-canvas), color-mix(in srgb, var(--dsg-canvas) 86%, var(--dsg-admin)) 55%, color-mix(in srgb, var(--dsg-canvas) 82%, var(--dsg-accent)));
+  }
+  .cover::after { content:""; position:absolute; inset:12px; border:1px solid var(--dsg-line); border-radius:20px; pointer-events:none; }
+  .copy { position:relative; z-index:1; flex:1 1 auto; min-width:0; }
+  .eyebrow { margin:0 0 14px; font:500 12px/1.3 var(--dsg-font-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--dsg-accent); }
+  h1 { margin:0; font:700 clamp(44px, 6.4vw, 62px)/.95 var(--dsg-font-display); letter-spacing:-.045em; color:var(--dsg-ink); }
+  .tag { margin:14px 0 0; max-width:56ch; font-size:16px; line-height:1.5; color:var(--dsg-ink-muted); }
+  .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+  .btn { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 18px; border-radius:999px; font:600 14px/1 var(--dsg-font-sans); text-decoration:none; }
+  .btn--primary { background:var(--dsg-accent); color:var(--dsg-on-accent); }
+  .btn--secondary { color:var(--dsg-ink); background:var(--dsg-glass-strong); border:1px solid var(--dsg-glass-rim); }
+  .atom { position:relative; z-index:1; flex:0 0 300px; width:300px; height:300px; margin-right:-20px; }
+  .atom img { display:block; width:100%; height:100%; }
+  .btn:focus-visible { outline:2px solid var(--dsg-accent); outline-offset:3px; }
+  @media (max-width: 1000px) {
+    .cover { gap:12px; padding:0 32px; }
+    .atom { flex-basis:260px; width:260px; height:260px; margin-right:-16px; }
+  }
+  @media (max-width: 760px) {
+    .cover { height:auto; min-height:288px; align-items:flex-start; padding:28px; }
+    .copy { padding-bottom:72px; }
+    .atom { position:absolute; right:-34px; bottom:-58px; width:230px; height:230px; opacity:.45; margin-right:0; }
+    .tag { max-width:44ch; }
+  }
+  @media (prefers-reduced-motion: reduce) { .atom img { opacity:1; } }
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="copy">
+    <p class="eyebrow">Diseño · Sistema · Vidrio</p>
+    <h1>Design System Glass</h1>
+    <p class="tag">Vidrio, color y claridad para interfaces que se sienten vivas. Un sistema escalable, documentado y listo para agentes.</p>
+    <div class="actions">
+      <a class="btn btn--primary" href="../../index.html#componentes">Explorar componentes <span aria-hidden="true">→</span></a>
+      <a class="btn btn--secondary" href="../../README.md">Leer la guía</a>
+    </div>
+  </div>
+  <div class="atom" aria-hidden="true">
+    <img src="../../assets/brand/logo-mark.svg" alt="" width="300" height="300">
+  </div>
+</div>
+</body>
+</html>

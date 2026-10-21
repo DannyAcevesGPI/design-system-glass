@@ -1,0 +1,35 @@
+<!-- @dsCard group="Acciones" height=130 subtitle="Cambio de vista y periodo" -->
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>SegmentedControl — vista previa</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../bundle.css">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<script src="../../tailwind/vendor/tailwind-play-3.4.17.js"></script>
+<script src="../../tailwind/play-config.js"></script>
+</head>
+<body class="dsg-mesh" style="margin:0">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:20px;padding:24px">
+  <div role="tablist" aria-label="Tipo de vista" class="dsg-glass dsg-seg">
+    <button type="button" role="tab" aria-selected="true" class="dsg-seg__btn">Por horizonte</button>
+    <button type="button" role="tab" aria-selected="false" class="dsg-seg__btn">Línea de tiempo</button>
+  </div>
+  <div role="group" aria-label="Periodo" class="dsg-glass dsg-seg">
+    <button type="button" aria-pressed="false" class="dsg-seg__btn">7 días</button>
+    <button type="button" aria-pressed="true" class="dsg-seg__btn">30 días</button>
+    <button type="button" aria-pressed="false" class="dsg-seg__btn">90 días</button>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.dsg-seg').forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var b = e.target.closest('.dsg-seg__btn'); if (!b) return;
+      var attr = b.hasAttribute('aria-selected') ? 'aria-selected' : 'aria-pressed';
+      g.querySelectorAll('.dsg-seg__btn').forEach(function (x) { x.setAttribute(attr, String(x === b)); });
+    });
+  });
+</script>
+</body>
+</html>
