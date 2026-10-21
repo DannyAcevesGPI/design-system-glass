@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Design System Glass: sistema de diseño de vidrio con tokens, componentes accesibles y documentación lista para agentes.">
+<meta name="theme-color" content="#07101d">
+<link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+<title>Design System Glass · Documentación</title>
+<script>
+(function(){try{var s=localStorage.getItem('dsg-theme');var t=s||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components/bundle.css">
+<script src="tailwind/vendor/tailwind-play-3.4.17.js"></script>
+<script src="tailwind/play-config.js"></script>
+<style>
+/* ——— página de documentación ——— */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; font-size: 15px; line-height: 1.5; }
+.skip { position: fixed; left: 16px; top: -100px; z-index: 1000; padding: 10px 16px; border-radius: 999px; background: var(--dsg-accent); color: var(--dsg-on-accent); font: 600 14px/1 var(--dsg-font-sans); text-decoration: none; }
+.skip:focus { top: 16px; outline: 2px solid var(--dsg-on-accent); outline-offset: 2px; }
+.page { min-height: 100vh; display: flex; flex-wrap: wrap; gap: 24px; padding-block: 20px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); box-sizing: border-box; background-attachment: fixed; }
+.toc { flex: 1 1 240px; align-self: flex-start; position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow: auto; padding: 20px 14px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box; scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--dsg-ink-subtle) 55%, transparent) transparent; }
+.toc::-webkit-scrollbar, .code::-webkit-scrollbar, .tblwrap::-webkit-scrollbar, .comp__stage::-webkit-scrollbar { width: 8px; height: 8px; }
+.toc::-webkit-scrollbar-thumb, .code::-webkit-scrollbar-thumb, .tblwrap::-webkit-scrollbar-thumb, .comp__stage::-webkit-scrollbar-thumb { background: color-mix(in oklab, var(--dsg-ink-subtle) 55%, transparent); border-radius: 999px; }
+.toc::-webkit-scrollbar-track, .code::-webkit-scrollbar-track, .tblwrap::-webkit-scrollbar-track, .comp__stage::-webkit-scrollbar-track { background: transparent; }
+.code, .tblwrap, .comp__stage { scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--dsg-ink-subtle) 55%, transparent) transparent; }
+.toc__brand { display: flex; align-items: center; gap: 12px; padding: 4px 8px 18px; color: var(--dsg-ink); text-decoration: none; }
+.toc__mark { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(140deg, rgba(92,210,240,0.18), rgba(245,180,81,0.10)); border: 1px solid var(--dsg-glass-rim); flex: none; }
+.toc__mark img { width: 36px; height: 36px; display: block; }
+.hero__mark { position: absolute; right: 28px; top: 50%; transform: translateY(-50%); width: 260px; height: 260px; opacity: .95; pointer-events: none; }
+.hero > *:not(.hero__mark) { position: relative; z-index: 1; }
+.toc__name { font: 700 20px/1.1 var(--dsg-font-display); letter-spacing: -.01em; }
+.toc__sub { display: block; padding: 6px 14px 6px 40px; font-size: 14px; color: var(--dsg-ink-muted); text-decoration: none; border-radius: 10px; }
+.toc__sub:hover { background: var(--dsg-glass-strong); color: var(--dsg-ink); }
+.toc:focus-visible, .toc__brand:focus-visible, .toc__sub:focus-visible { outline: 2px solid var(--dsg-accent); outline-offset: 3px; border-radius: 8px; }
+.toc .dsg-overline { padding: 16px 14px 6px; }
+main { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 28px; }
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.hero { position: relative; overflow: hidden; padding: 48px clamp(24px, 5vw, 56px); display: flex; flex-direction: column; gap: 16px; }
+.hero h1 { margin: 0; font: 700 clamp(48px, 7vw, 88px)/.95 var(--dsg-font-display); letter-spacing: -.035em; text-wrap: balance; }
+.hero p { margin: 0; max-width: 62ch; font-size: 18px; line-height: 1.55; color: var(--dsg-ink-muted); }
+@media (min-width: 981px) { .hero { padding-right: 300px; } .hero p { max-width: 55ch; } }
+@media (max-width: 980px) { .hero__mark { display: none; } .hero p { max-width: 70ch; } }
+.sec { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 20px; }
+.sec > h2 { margin: 0; font: 700 32px/1.1 var(--dsg-font-display); letter-spacing: -.02em; }
+.sec > p { margin: 0; max-width: 70ch; color: var(--dsg-ink-muted); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px; }
+.sw { overflow: hidden; display: flex; flex-direction: column; }
+.sw__chip { height: 88px; border-bottom: 1px solid var(--dsg-line); }
+.sw__body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; }
+.sw__name { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.sw__name code { font: 500 14px/1.2 var(--dsg-font-mono); color: var(--dsg-ink); }
+.sw__vals { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font: 400 12px/1.5 var(--dsg-font-mono); }
+.sw__vals dt { color: var(--dsg-ink-subtle); } .sw__vals dd { margin: 0; color: var(--dsg-ink-muted); word-break: break-all; }
+.sw__use { margin: 0; font-size: 13px; color: var(--dsg-ink-muted); }
+.copy { min-height: 32px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--dsg-line); background: var(--dsg-glass-strong); color: var(--dsg-ink); font: 500 12px/1 var(--dsg-font-sans); cursor: pointer; }
+.copy:focus-visible { outline: 2px solid var(--dsg-accent); outline-offset: 2px; }
+.ty { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 24px; padding: 20px 24px; border-top: 1px solid var(--dsg-line); align-items: center; }
+.ty:first-child { border-top: 0; }
+.ty__meta { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--dsg-ink-subtle); }
+.ty__meta code { font: 500 14px/1.2 var(--dsg-font-mono); color: var(--dsg-ink); }
+.ty__use { color: var(--dsg-ink-muted); }
+.ty__sample { color: var(--dsg-ink); overflow-wrap: anywhere; }
+.ty__sample.display-xl { font-size: clamp(48px, 7vw, 96px); }
+.sp { display: grid; grid-template-columns: 90px minmax(0, 1fr) 56px; gap: 4px 16px; align-items: center; padding: 10px 0; border-top: 1px solid var(--dsg-line); font-size: 13px; }
+.sp:first-child { border-top: 0; }
+.sp code { font: 500 13px var(--dsg-font-mono); }
+.sp__bar { height: 14px; border-radius: 4px; background: var(--dsg-accent); justify-self: start; }
+.sp__v { font-family: var(--dsg-font-mono); color: var(--dsg-ink-subtle); }
+.sp__use { grid-column: 2 / -1; color: var(--dsg-ink-muted); }
+.rds { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 16px; }
+.rd { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--dsg-ink-subtle); }
+.rd code { font: 500 13px var(--dsg-font-mono); color: var(--dsg-ink); }
+.rd__box { height: 80px; background: var(--dsg-glass-strong); border: 2px solid var(--dsg-accent); }
+.anat { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 20px; align-items: center; }
+.anat__demo { border-radius: var(--dsg-radius-2xl); padding: 40px; display: grid; place-items: center; min-height: 240px; }
+.comp { padding: 24px; display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 20px; }
+.comp__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; }
+.comp__head h3 { margin: 0; font: 700 24px/1.2 var(--dsg-font-display); }
+.comp__sum { margin: 0; color: var(--dsg-ink-muted); max-width: 70ch; }
+.comp__stage { border-radius: var(--dsg-radius-lg); border: 1px solid var(--dsg-line); overflow-x: auto; }
+.comp__stage > * { min-width: 0; }
+.comp__doc summary { cursor: pointer; font-weight: 600; color: var(--dsg-accent); min-height: 32px; display: flex; align-items: center; }
+.comp__doc summary:focus-visible { outline: 2px solid var(--dsg-accent); outline-offset: 3px; border-radius: 6px; }
+.prose h3 { margin: 0 0 8px; font: 700 22px/1.2 var(--dsg-font-display); }
+.prose h4 { margin: 16px 0 6px; font-size: 15px; }
+.prose p, .prose li { color: var(--dsg-ink-muted); max-width: 72ch; }
+.prose p { margin: 0 0 10px; }
+.prose ul { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.prose strong { color: var(--dsg-ink); }
+.prose code, .sp code { font-family: var(--dsg-font-mono); font-size: .9em; }
+main :not(pre) > code { overflow-wrap: anywhere; }
+.prose :not(pre) > code { padding: 1px 6px; border-radius: 6px; background: var(--dsg-glass-strong); color: var(--dsg-ink); }
+.guide { padding: 24px 28px; scroll-margin-top: 20px; }
+.tblwrap { overflow-x: auto; margin: 6px 0 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--dsg-line); vertical-align: top; }
+th { font-size: 12px; font-weight: 500; color: var(--dsg-ink-subtle); }
+td { color: var(--dsg-ink-muted); }
+.code { position: relative; margin: 0 0 12px; padding: 16px 18px; border-radius: var(--dsg-radius-lg); background: color-mix(in oklab, var(--dsg-canvas) 70%, transparent); border: 1px solid var(--dsg-line); overflow-x: auto; font: 400 13px/1.6 var(--dsg-font-mono); color: var(--dsg-ink); }
+.codebox { position: relative; }
+.codebox .copy { position: absolute; top: 10px; right: 10px; }
+.toast { position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); padding: 10px 16px; border-radius: 999px; font-size: 14px; pointer-events: none; opacity: 0; transition: opacity .2s; }
+.toast.on { opacity: 1; }
+@media (max-width: 720px) { .toc { position: static; max-height: none; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px; } .toc__brand { flex: 1 0 100%; padding: 4px 8px 8px; } .toc__sub { display: none; } .toc .dsg-overline { display: none; } .toc .dsg-nav-item { padding: 8px 12px; } .ty { grid-template-columns: 1fr; gap: 8px; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#top">Saltar al contenido</a>
+<div class="page dsg-mesh">
+<nav class="dsg-glass dsg-glass--panel toc" aria-label="Contenido">
+<a class="toc__brand" href="#top"><span class="toc__mark" aria-hidden="true"><img src="assets/brand/logo-mark.svg" alt="" width="36" height="36"></span><span><span class="toc__name">Design System Glass</span><br><span class="dsg-subtle" style="font-size:12px">v2.0 · AI-ready</span></span></a>
+<a class="dsg-nav-item" href="#color">Color</a>
+<a class="dsg-nav-item" href="#vidrio">Liquid Glass</a>
+<a class="dsg-nav-item" href="#tipografia">Tipografía</a>
+<a class="dsg-nav-item" href="#espacio">Espacio y radios</a>
+<a class="dsg-nav-item" href="#componentes">Componentes</a>
+<a class="toc__sub" href="#c-glass">Glass</a>
+<a class="toc__sub" href="#c-button">Button</a>
+<a class="toc__sub" href="#c-segmentedcontrol">SegmentedControl</a>
+<a class="toc__sub" href="#c-navitem">NavItem</a>
+<a class="toc__sub" href="#c-statuschip">StatusChip</a>
+<a class="toc__sub" href="#c-datebadge">DateBadge</a>
+<a class="toc__sub" href="#c-notice">Notice</a>
+<a class="toc__sub" href="#c-scorecard">Scorecard</a>
+<a class="toc__sub" href="#c-progressbar">ProgressBar</a>
+<a class="toc__sub" href="#c-newsticker">NewsTicker</a>
+<a class="toc__sub" href="#c-field">Field</a>
+<a class="toc__sub" href="#c-diff">Diff</a>
+
+<a class="dsg-nav-item" href="#guia">Guía</a>
+<a class="toc__sub" href="#g-principios">Principios</a>
+<a class="toc__sub" href="#g-temas">Temas</a>
+<a class="toc__sub" href="#g-liquid-glass">Liquid Glass</a>
+<a class="toc__sub" href="#g-color">Color</a>
+<a class="toc__sub" href="#g-tipografa">Tipografía</a>
+<a class="toc__sub" href="#g-espacio-radios-y-layout">Espacio, radios y layout</a>
+<a class="toc__sub" href="#g-iconografa">Iconografía</a>
+<a class="toc__sub" href="#g-movimiento">Movimiento</a>
+<a class="toc__sub" href="#g-accesibilidad-wcag-2-2-aa">Accesibilidad (WCAG 2.2 AA)</a>
+<a class="toc__sub" href="#g-uso-con-tailwind">Uso con Tailwind</a>
+
+</nav>
+<main id="top" tabindex="-1">
+<div class="top">
+<span class="dsg-eyebrow">Design System · v2.0</span>
+<div role="group" aria-label="Tema" class="dsg-glass dsg-seg">
+<button type="button" class="dsg-seg__btn" data-theme-set="dark" aria-pressed="false">Oscuro</button>
+<button type="button" class="dsg-seg__btn" data-theme-set="light" aria-pressed="false">Claro</button>
+</div>
+</div>
+
+<header class="dsg-glass dsg-glass--hero hero">
+<span class="dsg-eyebrow">Diseño · Sistema · Vidrio</span>
+<h1>Design System Glass</h1>
+<p>Vidrio, color y claridad para interfaces que se sienten vivas. Un sistema de diseño escalable, documentado y listo para trabajar con agentes: tokens, componentes, patrones y reglas en un solo lugar.</p>
+<div style="display:flex;flex-wrap:wrap;gap:12px;padding-top:8px">
+<a class="dsg-btn dsg-btn--primary" href="#componentes">Explorar componentes</a>
+<a class="dsg-btn dsg-btn--secondary" href="docs/06-ai-experience.md">Guía para agentes</a>
+</div>
+<img class="hero__mark" src="assets/brand/logo-mark.svg" alt="" width="260" height="260">
+</header>
+
+<section id="color" class="sec" aria-labelledby="color-t">
+<h2 id="color-t">Color</h2>
+<p>Cada token tiene un valor por tema. Las muestras usan el tema activo; cambia entre Oscuro y Claro arriba para comparar.</p>
+<div class="grid"><article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-canvas)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-canvas</code><button type="button" class="copy" data-copy="var(--dsg-canvas)" aria-label="Copiar var(--dsg-canvas)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#070b14</dd><dt>Claro</dt><dd>#ecf1fa</dd></dl>
+<p class="sw__use">Color base de la página, debajo del fondo de manchas (.dsg-mesh). Tailwind: bg-canvas.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-ink)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-ink</code><button type="button" class="copy" data-copy="var(--dsg-ink)" aria-label="Copiar var(--dsg-ink)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#eef2f8</dd><dt>Claro</dt><dd>#0b1222</dd></dl>
+<p class="sw__use">Texto principal y títulos sobre canvas y sobre cualquier superficie de vidrio. Tailwind: text-ink.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-ink-muted)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-ink-muted</code><button type="button" class="copy" data-copy="var(--dsg-ink-muted)" aria-label="Copiar var(--dsg-ink-muted)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#aeb8ca</dd><dt>Claro</dt><dd>#36425a</dd></dl>
+<p class="sw__use">Texto de apoyo: descripciones, párrafos secundarios, enlaces inactivos del menú. Tailwind: text-ink-muted.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-ink-subtle)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-ink-subtle</code><button type="button" class="copy" data-copy="var(--dsg-ink-subtle)" aria-label="Copiar var(--dsg-ink-subtle)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#8c97ad</dd><dt>Claro</dt><dd>#4d5970</dd></dl>
+<p class="sw__use">Metadatos, fechas, contadores y etiquetas pequeñas. Mínimo 13px. Tailwind: text-ink-subtle.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-glass)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-glass</code><button type="button" class="copy" data-copy="var(--dsg-glass)" aria-label="Copiar var(--dsg-glass)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>rgba(255,255,255,0.055)</dd><dt>Claro</dt><dd>rgba(255,255,255,0.46)</dd></dl>
+<p class="sw__use">Relleno de toda superficie de vidrio: cards, paneles, menú, modales. En claro, .dsg-glass añade además un brillo diagonal. Tailwind: bg-glass.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-glass-strong)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-glass-strong</code><button type="button" class="copy" data-copy="var(--dsg-glass-strong)" aria-label="Copiar var(--dsg-glass-strong)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>rgba(255,255,255,0.10)</dd><dt>Claro</dt><dd>rgba(255,255,255,0.72)</dd></dl>
+<p class="sw__use">Vidrio elevado dentro de otro vidrio: elemento activo del menú, filas seleccionadas, tags, botón secundario. Tailwind: bg-glass-strong.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-glass-rim)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-glass-rim</code><button type="button" class="copy" data-copy="var(--dsg-glass-rim)" aria-label="Copiar var(--dsg-glass-rim)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>rgba(255,255,255,0.12)</dd><dt>Claro</dt><dd>rgba(255,255,255,0.88)</dd></dl>
+<p class="sw__use">Borde de 1px de las superficies de vidrio. En claro es el reflejo blanco que define el borde. Tailwind: border-glass-rim.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-glass-highlight)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-glass-highlight</code><button type="button" class="copy" data-copy="var(--dsg-glass-highlight)" aria-label="Copiar var(--dsg-glass-highlight)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>rgba(255,255,255,0.10)</dd><dt>Claro</dt><dd>#ffffff</dd></dl>
+<p class="sw__use">Línea de luz interior en el borde superior del vidrio (inset 0 1px 0). Incluida en shadow-glass.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-line)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-line</code><button type="button" class="copy" data-copy="var(--dsg-line)" aria-label="Copiar var(--dsg-line)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>rgba(255,255,255,0.12)</dd><dt>Claro</dt><dd>rgba(15,23,42,0.11)</dd></dl>
+<p class="sw__use">Divisores, bordes de campos, tablas y botones secundarios dentro del vidrio. Tailwind: border-line.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-accent)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-accent</code><button type="button" class="copy" data-copy="var(--dsg-accent)" aria-label="Copiar var(--dsg-accent)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#5cd2f0</dd><dt>Claro</dt><dd>#0a6a86</dd></dl>
+<p class="sw__use">Acción principal, enlaces, estado activo, foco y estado «En desarrollo». Texto encima: on-accent. Tailwind: bg-accent / text-accent.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-accent-warm)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-accent-warm</code><button type="button" class="copy" data-copy="var(--dsg-accent-warm)" aria-label="Copiar var(--dsg-accent-warm)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#f5b451</dd><dt>Claro</dt><dd>#965700</dd></dl>
+<p class="sw__use">Segundo acento: etiqueta de la cinta de noticias, estado «Piloto», badges de pendientes. Texto encima: on-accent.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-on-accent)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-on-accent</code><button type="button" class="copy" data-copy="var(--dsg-on-accent)" aria-label="Copiar var(--dsg-on-accent)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#04121a</dd><dt>Claro</dt><dd>#ffffff</dd></dl>
+<p class="sw__use">Texto e íconos sobre accent, accent-warm, success y admin rellenos.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-success)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-success</code><button type="button" class="copy" data-copy="var(--dsg-success)" aria-label="Copiar var(--dsg-success)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#6ee7a8</dd><dt>Claro</dt><dd>#0e7346</dd></dl>
+<p class="sw__use">Liberado, hito completado, fecha confirmada, impacto conseguido, texto agregado en un diff.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-warning)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-warning</code><button type="button" class="copy" data-copy="var(--dsg-warning)" aria-label="Copiar var(--dsg-warning)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>= accent-warm</dd><dt>Claro</dt><dd>= accent-warm</dd></dl>
+<p class="sw__use">Dependencias críticas, avisos, indicadores demostrativos. Mismo valor que accent-warm; úsalo cuando el significado es de alerta.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-danger)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-danger</code><button type="button" class="copy" data-copy="var(--dsg-danger)" aria-label="Copiar var(--dsg-danger)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#ff8f80</dd><dt>Claro</dt><dd>#b3311e</dd></dl>
+<p class="sw__use">Bloqueos, prioridad alta, rechazos, texto eliminado en un diff. Siempre acompañado de etiqueta o ícono, nunca solo color.</p></div></article>
+<article class="dsg-glass sw"><div class="sw__chip" style="background:var(--dsg-admin)"></div>
+<div class="sw__body"><div class="sw__name"><code>--dsg-admin</code><button type="button" class="copy" data-copy="var(--dsg-admin)" aria-label="Copiar var(--dsg-admin)">Copiar</button></div>
+<dl class="sw__vals"><dt>Oscuro</dt><dd>#b7a4ff</dd><dt>Claro</dt><dd>#5b3fd1</dd></dl>
+<p class="sw__use">Identidad de una superficie administrativa: marca «Panel interno», rol ADMIN e ícono activo del menú.</p></div></article>
+</div>
+</section>
+
+<section id="vidrio" class="sec" aria-labelledby="vidrio-t">
+<h2 id="vidrio-t">Liquid Glass</h2>
+<p>El vidrio necesita color detrás. Relleno translúcido, borde de luz, línea superior, sombra y desenfoque, todos en tokens.</p>
+<div class="anat">
+<div class="anat__demo dsg-mesh" style="border:1px solid var(--dsg-line)"><div class="dsg-glass" style="padding:28px;max-width:320px;display:flex;flex-direction:column;gap:8px"><span class="dsg-overline">.dsg-glass</span><strong style="font:700 22px/1.2 var(--dsg-font-display)">Superficie de vidrio</strong><span class="dsg-muted" style="font-size:14px">Mueve el tema para ver el brillo diagonal del modo claro.</span></div></div>
+<div class="dsg-glass dsg-glass--panel" style="padding:8px 8px 4px"><div class="tblwrap"><table><thead><tr><th>Capa</th><th>Token</th><th>Valor activo</th></tr></thead><tbody>
+<tr><td>Relleno</td><td><code>--dsg-glass</code></td><td><code id="v-glass"></code></td></tr>
+<tr><td>Borde</td><td><code>--dsg-glass-rim</code></td><td><code id="v-glass-rim"></code></td></tr>
+<tr><td>Luz superior</td><td><code>--dsg-glass-highlight</code></td><td><code id="v-glass-highlight"></code></td></tr>
+<tr><td>Sombra</td><td><code>--dsg-shadow-glass</code></td><td><code id="v-shadow-glass" style="word-break:break-all"></code></td></tr>
+<tr><td>Desenfoque</td><td><code>--dsg-backdrop-glass</code></td><td><code id="v-backdrop"></code></td></tr>
+</tbody></table></div></div>
+</div>
+</section>
+
+<section id="tipografia" class="sec" aria-labelledby="tipo-t">
+<h2 id="tipo-t">Tipografía</h2>
+<p>Bricolage Grotesque para títulos y cifras, IBM Plex Sans para la interfaz, IBM Plex Mono para antetítulos y etiquetas.</p>
+<div class="dsg-glass dsg-glass--panel"><div class="ty"><div class="ty__meta"><code>.display-xl</code><span>Display · 96px / 0.95 · 700 · -0.035em</span><span class="ty__use">Título del hero en Inicio. En pantalla: clamp(56px, 7vw, 96px).</span></div>
+<div class="ty__sample display-xl">Design System Glass</div></div>
+<div class="ty"><div class="ty__meta"><code>.display-lg</code><span>Display · 52px / 1 · 700 · -0.03em</span><span class="ty__use">Título de página pública (h1).</span></div>
+<div class="ty__sample display-lg">Proyectos</div></div>
+<div class="ty"><div class="ty__meta"><code>.kpi</code><span>Display · 52px / 1 · 700 · -0.03em</span><span class="ty__use">Valor de un scorecard.</span></div>
+<div class="ty__sample kpi">24</div></div>
+<div class="ty"><div class="ty__meta"><code>.heading-lg</code><span>Display · 28px / 1.15 · 700 · -0.015em</span><span class="ty__use">Título de sección fuera de un panel.</span></div>
+<div class="ty__sample heading-lg">Próximos lanzamientos</div></div>
+<div class="ty"><div class="ty__meta"><code>.heading-md</code><span>Display · 24px / 1.2 · 700 · -0.01em</span><span class="ty__use">Título de un panel de vidrio.</span></div>
+<div class="ty__sample heading-md">Avisos importantes</div></div>
+<div class="ty"><div class="ty__meta"><code>.heading-sm</code><span>Display · 20px / 1.25 · 700</span><span class="ty__use">Título de card o de columna lateral.</span></div>
+<div class="ty__sample heading-sm">Responsables</div></div>
+<div class="ty"><div class="ty__meta"><code>.body-lg</code><span>Texto · 17px / 1.55 · 400</span><span class="ty__use">Introducción bajo un título de página, en ink-muted.</span></div>
+<div class="ty__sample body-lg">Todo lo que el área está construyendo, en un solo lugar.</div></div>
+<div class="ty"><div class="ty__meta"><code>.body</code><span>Texto · 15px / 1.5 · 400</span><span class="ty__use">Texto base de la interfaz.</span></div>
+<div class="ty__sample body">Calculado a partir de hitos completados.</div></div>
+<div class="ty"><div class="ty__meta"><code>.body-sm</code><span>Texto · 14px / 1.5 · 400</span><span class="ty__use">Descripciones dentro de cards y listas.</span></div>
+<div class="ty__sample body-sm">Afecta el hito de piloto.</div></div>
+<div class="ty"><div class="ty__meta"><code>.caption</code><span>Texto · 13px / 1.45 · 400</span><span class="ty__use">Metadatos y fechas, en ink-subtle.</span></div>
+<div class="ty__sample caption">Publicado hace 2 días</div></div>
+<div class="ty"><div class="ty__meta"><code>.label</code><span>Texto · 15px / 1.4 · 600</span><span class="ty__use">Botones, elementos de menú activos y títulos de fila.</span></div>
+<div class="ty__sample label">Explorar proyectos</div></div>
+<div class="ty"><div class="ty__meta"><code>.eyebrow</code><span>Utilidad · 12px / 1.3 · 500 · 0.14em</span><span class="ty__use">Antetítulo en mayúsculas sobre un h1, en accent.</span></div>
+<div class="ty__sample eyebrow">INNOVACIÓN · DESARROLLO</div></div>
+<div class="ty"><div class="ty__meta"><code>.overline</code><span>Utilidad · 11px / 1.3 · 500 · 0.12em</span><span class="ty__use">Encabezado de grupo en el menú lateral, en mayúsculas y ink-subtle.</span></div>
+<div class="ty__sample overline">EXPLORAR</div></div>
+</div>
+</section>
+
+<section id="espacio" class="sec" aria-labelledby="esp-t">
+<h2 id="esp-t">Espacio y radios</h2>
+<p>Escala de 4px igual a la de Tailwind (<code>space-4</code> = <code>p-4</code> = 16px).</p>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))">
+<div class="dsg-glass dsg-glass--panel" style="padding:12px 24px"><div class="sp"><code>space-1</code><span class="sp__bar" style="width:4px"></span><span class="sp__v">4px</span><span class="sp__use">Separación entre ítems del menú (gap-1).</span></div>
+<div class="sp"><code>space-2</code><span class="sp__bar" style="width:8px"></span><span class="sp__v">8px</span><span class="sp__use">Gap entre chips y tags (gap-2).</span></div>
+<div class="sp"><code>space-3</code><span class="sp__bar" style="width:12px"></span><span class="sp__v">12px</span><span class="sp__use">Gap entre ícono y texto, entre botones (gap-3).</span></div>
+<div class="sp"><code>space-4</code><span class="sp__bar" style="width:16px"></span><span class="sp__v">16px</span><span class="sp__use">Padding de filas y avisos; gap de grids de cards (p-4).</span></div>
+<div class="sp"><code>space-5</code><span class="sp__bar" style="width:20px"></span><span class="sp__v">20px</span><span class="sp__use">Padding de la página y de cards compactas (p-5).</span></div>
+<div class="sp"><code>space-6</code><span class="sp__bar" style="width:24px"></span><span class="sp__v">24px</span><span class="sp__use">Padding estándar de una card de vidrio; gap entre secciones (p-6).</span></div>
+<div class="sp"><code>space-7</code><span class="sp__bar" style="width:28px"></span><span class="sp__v">28px</span><span class="sp__use">Padding de paneles grandes (p-7).</span></div>
+<div class="sp"><code>space-10</code><span class="sp__bar" style="width:40px"></span><span class="sp__v">40px</span><span class="sp__use">Padding vertical del hero (py-10).</span></div>
+<div class="sp"><code>space-14</code><span class="sp__bar" style="width:56px"></span><span class="sp__v">56px</span><span class="sp__use">Padding horizontal del hero en escritorio (px-14).</span></div>
+</div>
+<div class="dsg-glass dsg-glass--panel" style="padding:24px"><div class="rds"><div class="rd"><div class="rd__box" style="border-radius:8px"></div><code>radius-sm</code><span>8px</span></div>
+<div class="rd"><div class="rd__box" style="border-radius:14px"></div><code>radius-md</code><span>14px</span></div>
+<div class="rd"><div class="rd__box" style="border-radius:18px"></div><code>radius-lg</code><span>18px</span></div>
+<div class="rd"><div class="rd__box" style="border-radius:22px"></div><code>radius-xl</code><span>22px</span></div>
+<div class="rd"><div class="rd__box" style="border-radius:26px"></div><code>radius-2xl</code><span>26px</span></div>
+<div class="rd"><div class="rd__box" style="border-radius:32px"></div><code>radius-3xl</code><span>32px</span></div>
+<div class="rd"><div class="rd__box" style="border-radius:40px"></div><code>radius-full</code><span>9999px</span></div>
+</div></div>
+</div>
+</section>
+
+<section id="componentes" class="sec" aria-labelledby="comp-t">
+<h2 id="comp-t">Componentes</h2>
+<p>Ejemplos en vivo de las clases <code>.dsg-*</code>. Cada uno incluye su guía de uso.</p>
+<section id="c-glass" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-glass-t">
+<div class="comp__head"><h3 id="c-glass-t">Glass</h3><span class="dsg-subtle">Card, panel e inset</span></div>
+<p class="comp__sum">La superficie de vidrio es el contenedor base del sistema: cards, paneles, menú lateral, hero y modales.</p>
+<div class="comp__stage dsg-mesh">
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:24px">
+  <article class="dsg-glass" style="padding:24px;display:flex;flex-direction:column;gap:8px">
+    <span class="dsg-overline">.dsg-glass</span>
+    <h3 style="margin:0;font:700 20px/1.25 var(--dsg-font-display)">Card de vidrio</h3>
+    <p class="dsg-muted" style="margin:0;font-size:14px">Relleno translúcido, borde de luz y desenfoque del fondo.</p>
+  </article>
+  <section class="dsg-glass dsg-glass--panel" style="padding:24px;display:flex;flex-direction:column;gap:12px">
+    <span class="dsg-overline">.dsg-glass--panel</span>
+    <div class="dsg-inset" style="padding:14px;font-size:14px">.dsg-inset · fila elevada</div>
+    <div class="dsg-inset" style="padding:14px;font-size:14px">Otra fila</div>
+  </section>
+  <section class="rounded-panel border border-glass-rim bg-glass shadow-glass backdrop-blur-xl" style="padding:24px;display:flex;flex-direction:column;gap:8px">
+    <span class="dsg-overline">Utilidades Tailwind</span>
+    <code style="font:400 12px/1.5 var(--dsg-font-mono);color:var(--dsg-ink-muted)">rounded-panel border border-glass-rim bg-glass shadow-glass backdrop-blur-xl</code>
+  </section>
+</div>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Cuándo usarla</h4>
+<ul>
+<li>Todo bloque que agrupa contenido sobre el fondo de manchas (<code>.dsg-mesh</code>).</li>
+<li><code>.dsg-glass</code> (radio 22px) para cards; <code>.dsg-glass--panel</code> (26px) para paneles y el menú; <code>.dsg-glass--hero</code> (32px) solo para el hero de Inicio.</li>
+<li>Dentro de un vidrio, usa <code>.dsg-inset</code> (glass-strong) para filas o elementos seleccionados. No anides <code>.dsg-glass</code> dentro de <code>.dsg-glass</code>: el desenfoque doble ensucia el texto.</li>
+</ul>
+<h4>Reglas</h4>
+<ul>
+<li>Siempre debe haber color detrás: sin <code>.dsg-mesh</code> el vidrio se ve plano, sobre todo en claro.</li>
+<li>En claro, <code>.dsg-glass</code> agrega un brillo diagonal (más blanco arriba a la izquierda) y usa <code>backdrop-glass-light</code>.</li>
+<li>El texto dentro usa <code>ink</code>, <code>ink-muted</code> o <code>ink-subtle</code>; los tres pasan 4.5:1 sobre el vidrio en ambos temas.</li>
+</ul>
+<h4>Tailwind</h4>
+<pre class="code"><code>&lt;article class=&quot;dsg-glass p-6&quot;&gt;…&lt;/article&gt;
+&lt;!-- o solo con utilidades del preset --&gt;
+&lt;article class=&quot;rounded-glass border border-glass-rim bg-glass shadow-glass backdrop-blur-glass backdrop-saturate-160 p-6&quot;&gt;…&lt;/article&gt;</code></pre></div></details>
+</section>
+<section id="c-button" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-button-t">
+<div class="comp__head"><h3 id="c-button-t">Button</h3><span class="dsg-subtle">Primario, secundario, fantasma, decisión e ícono</span></div>
+<p class="comp__sum">Botones pill para acciones primarias y botones de decisión para flujos de revisión.</p>
+<div class="comp__stage dsg-mesh">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:24px">
+  <a href="#" class="dsg-btn dsg-btn--primary">Explorar proyectos
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+  <a href="#" class="dsg-btn dsg-btn--secondary">Ver roadmap</a>
+  <button type="button" class="dsg-btn dsg-btn--ghost">Cancelar</button>
+  <button type="button" class="dsg-btn dsg-btn--success">Aprobar y publicar</button>
+  <button type="button" class="dsg-btn dsg-btn--danger">Rechazar</button>
+  <button type="button" class="dsg-btn dsg-btn--secondary dsg-btn--icon" aria-label="Notificaciones">
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9z"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg></button>
+</div>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Variantes</h4>
+<div class="tblwrap"><table><thead><tr><th>Clase</th><th>Uso</th></tr></thead><tbody><tr><td><code>.dsg-btn--primary</code></td><td>Una sola acción principal por vista (accent + on-accent).</td></tr><tr><td><code>.dsg-btn--secondary</code></td><td>Acción alternativa junto a la principal (glass-strong + line).</td></tr><tr><td><code>.dsg-btn--ghost</code></td><td>Cancelar, acciones de baja prioridad.</td></tr><tr><td><code>.dsg-btn--success</code></td><td>«Aprobar y publicar» en revisión. Esquinas <code>radius-md</code>.</td></tr><tr><td><code>.dsg-btn--danger</code></td><td>«Rechazar» y acciones destructivas: contorno, nunca relleno.</td></tr><tr><td><code>.dsg-btn--icon</code></td><td>Botón solo con ícono, 44×44 px. Requiere <code>aria-label</code>.</td></tr></tbody></table></div>
+<h4>Reglas</h4>
+<ul>
+<li>Altura mínima 48px (44px para íconos): objetivo táctil accesible.</li>
+<li>Usa <code>&lt;a href&gt;</code> para navegar y <code>&lt;button&gt;</code> para acciones; nunca un <code>div</code> con <code>onClick</code>.</li>
+<li>El texto nombra lo que pasa: «Enviar solicitud», «Aprobar y publicar».</li>
+</ul>
+<h4>Tailwind</h4>
+<pre class="code"><code>&lt;button class=&quot;dsg-btn dsg-btn--primary&quot;&gt;Explorar proyectos&lt;/button&gt;
+&lt;button class=&quot;inline-flex min-h-12 items-center gap-2 rounded-full bg-accent px-6 font-semibold text-accent-on&quot;&gt;…&lt;/button&gt;</code></pre></div></details>
+</section>
+<section id="c-segmentedcontrol" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-segmentedcontrol-t">
+<div class="comp__head"><h3 id="c-segmentedcontrol-t">SegmentedControl</h3><span class="dsg-subtle">Cambio de vista y periodo</span></div>
+<p class="comp__sum">Grupo de 2 a 4 opciones excluyentes para cambiar de vista (Roadmap, Equipo) o de periodo (Resumen).</p>
+<div class="comp__stage dsg-mesh">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:20px;padding:24px">
+  <div role="tablist" aria-label="Tipo de vista" class="dsg-glass dsg-seg">
+    <button type="button" role="tab" aria-selected="true" class="dsg-seg__btn">Por horizonte</button>
+    <button type="button" role="tab" aria-selected="false" class="dsg-seg__btn">Línea de tiempo</button>
+  </div>
+  <div role="group" aria-label="Periodo" class="dsg-glass dsg-seg">
+    <button type="button" aria-pressed="false" class="dsg-seg__btn">7 días</button>
+    <button type="button" aria-pressed="true" class="dsg-seg__btn">30 días</button>
+    <button type="button" aria-pressed="false" class="dsg-seg__btn">90 días</button>
+  </div>
+</div>
+
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Reglas</h4>
+<ul>
+<li>Para vistas: <code>role=&quot;tablist&quot;</code>, cada botón <code>role=&quot;tab&quot;</code> con <code>aria-selected</code>.</li>
+<li>Para filtros de periodo: <code>role=&quot;group&quot;</code> con <code>aria-label</code>, botones con <code>aria-pressed</code>.</li>
+<li>La opción activa usa accent + on-accent; las inactivas, ink-muted sobre transparente.</li>
+<li>Contenedor: <code>.dsg-glass .dsg-seg</code>. No más de 4 opciones; para más, usa un <code>&lt;select&gt;</code>.</li>
+</ul>
+<h4>Tailwind</h4>
+<pre class="code"><code>&lt;div role=&quot;tablist&quot; class=&quot;dsg-glass dsg-seg&quot;&gt;
+  &lt;button role=&quot;tab&quot; aria-selected=&quot;true&quot; class=&quot;dsg-seg__btn&quot;&gt;Por horizonte&lt;/button&gt;
+&lt;/div&gt;</code></pre></div></details>
+</section>
+<section id="c-navitem" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-navitem-t">
+<div class="comp__head"><h3 id="c-navitem-t">NavItem</h3><span class="dsg-subtle">Menú lateral público e interno</span></div>
+<p class="comp__sum">Elemento del menú lateral, con ícono, estado activo y contador opcional.</p>
+<div class="comp__stage dsg-mesh">
+<div style="display:flex;flex-wrap:wrap;gap:20px;padding:24px;align-items:flex-start">
+  <nav aria-label="Navegación principal" class="dsg-glass dsg-glass--panel" style="width:260px;padding:16px 12px;display:flex;flex-direction:column;gap:4px;box-sizing:border-box">
+    <span class="dsg-overline" style="padding:0 14px 8px">Explorar</span>
+    <a href="#" class="dsg-nav-item" aria-current="page"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"></path></svg>Inicio</a>
+    <a href="#" class="dsg-nav-item"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h9M4 12h16M4 18h6"></path><circle cx="17" cy="6" r="2.2"></circle><circle cx="14" cy="18" r="2.2"></circle></svg>Roadmap</a>
+    <a href="#" class="dsg-nav-item"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7.5" height="7.5" rx="2"></rect><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"></rect><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"></rect><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"></rect></svg>Proyectos</a>
+    <a href="#" class="dsg-nav-item"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v14H8a3 3 0 0 1-3-3z"></path><path d="M5 18a3 3 0 0 1 3-3h11"></path></svg>Conocimiento</a>
+  </nav>
+  <nav aria-label="Panel interno" class="dsg-glass dsg-glass--panel" style="width:260px;padding:16px 12px;display:flex;flex-direction:column;gap:4px;box-sizing:border-box">
+    <span class="dsg-overline" style="padding:0 14px 8px;color:var(--dsg-admin)">Panel interno</span>
+    <a href="#" class="dsg-nav-item"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg>Resumen</a>
+    <a href="#" class="dsg-nav-item" aria-current="page"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"></circle><circle cx="6" cy="18" r="2.5"></circle><circle cx="18" cy="18" r="2.5"></circle><path d="M6 8.5v7M18 15.5V11a4 4 0 0 0-4-4h-4"></path></svg>Revisiones<span class="dsg-nav-count" aria-label="3 pendientes">3</span></a>
+    <a href="#" class="dsg-nav-item"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4z"></path></svg>Solicitudes</a>
+  </nav>
+</div>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Reglas</h4>
+<ul>
+<li>El elemento activo lleva <code>aria-current=&quot;page&quot;</code>: fondo glass-strong, borde line, texto ink en 600 y el ícono en accent.</li>
+<li>Ícono de 20px con trazo de 1.8 y <code>aria-hidden=&quot;true&quot;</code>; el texto siempre visible.</li>
+<li>Contador <code>.dsg-nav-count</code> (accent-warm + on-accent) solo para cosas que piden acción: revisiones pendientes, solicitudes sin atender.</li>
+<li>Agrupa con un <code>.dsg-overline</code> («Explorar», «Contenido», «Administración»). En una superficie administrativa, el nombre va en <code>admin</code>.</li>
+<li>El menú vive en un <code>.dsg-glass--panel</code>. En móvil se apila arriba del contenido y se colapsa en un botón de menú.</li>
+<li>Una superficie pública nunca enlaza a la administración.</li>
+</ul>
+<h4>Tailwind</h4>
+<pre class="code"><code>&lt;a href=&quot;/proyectos&quot; aria-current=&quot;page&quot; class=&quot;dsg-nav-item&quot;&gt;…Proyectos&lt;/a&gt;</code></pre></div></details>
+</section>
+<section id="c-statuschip" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-statuschip-t">
+<div class="comp__head"><h3 id="c-statuschip-t">StatusChip</h3><span class="dsg-subtle">Estados de proyecto, propuesta y tags</span></div>
+<p class="comp__sum">Chip de estado para proyectos, propuestas y roles, más el tag neutro para clasificar contenido.</p>
+<div class="comp__stage dsg-mesh">
+<div class="dsg-glass" style="margin:20px;padding:20px;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;flex-wrap:wrap;gap:8px">
+    <span class="dsg-chip">Planeado</span>
+    <span class="dsg-chip dsg-chip--accent">En desarrollo</span>
+    <span class="dsg-chip dsg-chip--warm">Piloto</span>
+    <span class="dsg-chip dsg-chip--success">Liberado</span>
+    <span class="dsg-chip dsg-chip--warm">Pendiente de revisión</span>
+    <span class="dsg-chip dsg-chip--danger">Cambios solicitados</span>
+    <span class="dsg-chip dsg-chip--admin">ADMIN</span>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">
+    <span class="dsg-tag">automatización</span><span class="dsg-tag">datos</span><span class="dsg-tag">IA aplicada</span>
+  </div>
+</div>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Mapa de estados</h4>
+<div class="tblwrap"><table><thead><tr><th>Estado</th><th>Clase</th></tr></thead><tbody><tr><td>Planeado, Borrador, Por definir</td><td><code>.dsg-chip</code> (neutro)</td></tr><tr><td>En desarrollo</td><td><code>.dsg-chip--accent</code></td></tr><tr><td>Piloto, Pendiente de revisión</td><td><code>.dsg-chip--warm</code></td></tr><tr><td>Liberado, Aprobada, Publicada</td><td><code>.dsg-chip--success</code></td></tr><tr><td>Bloqueado, Cambios solicitados, Rechazada</td><td><code>.dsg-chip--danger</code></td></tr><tr><td>Rol ADMIN</td><td><code>.dsg-chip--admin</code></td></tr></tbody></table></div>
+<h4>Reglas</h4>
+<ul>
+<li>El chip siempre lleva texto: el color refuerza, no sustituye.</li>
+<li>El color de cada chip sale de una sola variable <code>--c</code>: relleno al 15% y borde al 35% del mismo tono.</li>
+<li><code>.dsg-tag</code> (radius-sm, glass-strong) es para categorías y skills; no comunica estado.</li>
+</ul>
+<h4>Tailwind</h4>
+<pre class="code"><code>&lt;span class=&quot;dsg-chip dsg-chip--accent&quot;&gt;En desarrollo&lt;/span&gt;</code></pre></div></details>
+</section>
+<section id="c-datebadge" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-datebadge-t">
+<div class="comp__head"><h3 id="c-datebadge-t">DateBadge</h3><span class="dsg-subtle">Fecha confirmada frente a estimada</span></div>
+<p class="comp__sum">Distingue una fecha comprometida de una estimada en lanzamientos, roadmap y detalle de proyecto.</p>
+<div class="comp__stage dsg-mesh">
+<div class="dsg-glass" style="margin:20px;padding:20px;display:flex;flex-wrap:wrap;align-items:center;gap:12px">
+  <span class="dsg-date dsg-date--confirmed">Confirmada · 14 nov</span>
+  <span class="dsg-date dsg-date--estimated">Estimada · dic 2026</span>
+  <span class="dsg-date dsg-date--estimated">Estimada · T1 2027</span>
+  <span class="dsg-subtle" style="font-size:13px">Sólida = compromiso · Punteada = intención</span>
+</div>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Reglas</h4>
+<ul>
+<li><code>.dsg-date--confirmed</code>: borde sólido de 2px en success. Solo cuando la fecha está aprobada como compromiso.</li>
+<li><code>.dsg-date--estimated</code>: borde punteado de 2px en ink-subtle. Es la opción por defecto.</li>
+<li>El texto siempre dice «Confirmada» o «Estimada»: el tipo de borde refuerza, no sustituye.</li>
+<li>Una fecha estimada se escribe con la precisión que realmente se tiene (mes o trimestre), no con día exacto.</li>
+<li>Muestra la leyenda (sólida / punteada) una vez por sección.</li>
+</ul></div></details>
+</section>
+<section id="c-notice" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-notice-t">
+<div class="comp__head"><h3 id="c-notice-t">Notice</h3><span class="dsg-subtle">Bloqueo, dependencia, comunicado, sin conflictos</span></div>
+<p class="comp__sum">Aviso con severidad para bloqueos, dependencias, comunicados y mensajes de estado del sistema.</p>
+<div class="comp__stage dsg-mesh">
+<ul class="dsg-glass dsg-glass--panel" style="list-style:none;margin:20px;padding:20px;display:flex;flex-direction:column;gap:10px">
+  <li class="dsg-notice dsg-notice--danger">
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--dsg-danger)" stroke-width="2" stroke-linecap="round" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h8"></path></svg>
+    <div style="display:flex;flex-direction:column;gap:4px"><span class="dsg-notice__kind">Bloqueo</span><span class="dsg-notice__title">Proyecto en espera de acceso al sistema de nómina</span><span class="dsg-notice__body">Afecta el hito de piloto. Responsable: líder del proyecto.</span></div>
+  </li>
+  <li class="dsg-notice dsg-notice--warning">
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--dsg-warning)" stroke-width="2" stroke-linecap="round" style="flex:none;margin-top:2px"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"></path><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg>
+    <div style="display:flex;flex-direction:column;gap:4px"><span class="dsg-notice__kind">Dependencia crítica</span><span class="dsg-notice__title">Requiere la integración de otro proyecto</span></div>
+  </li>
+  <li class="dsg-notice dsg-notice--neutral">
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--dsg-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><path d="M4 10v4h3l6 4V6L7 10z"></path><path d="M17 9a4 4 0 0 1 0 6"></path></svg>
+    <div style="display:flex;flex-direction:column;gap:4px"><span class="dsg-notice__kind">Comunicado</span><span class="dsg-notice__title">Nuevo proceso para proponer ideas</span></div>
+  </li>
+  <li class="dsg-notice dsg-notice--success" style="align-items:center">
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--dsg-success)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="m5 12 5 5 9-10"></path></svg>
+    <span style="font-size:14px">Sin conflictos: la versión publicada no cambió desde que se creó la propuesta.</span>
+  </li>
+</ul>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Severidades</h4>
+<div class="tblwrap"><table><thead><tr><th>Tipo</th><th>Clase</th><th>Ícono</th></tr></thead><tbody><tr><td>Bloqueo, rechazo</td><td><code>.dsg-notice--danger</code></td><td>círculo con guion</td></tr><tr><td>Dependencia crítica, alerta operativa</td><td><code>.dsg-notice--warning</code></td><td>eslabón</td></tr><tr><td>Comunicado, aviso del área</td><td><code>.dsg-notice--neutral</code></td><td>megáfono en accent</td></tr><tr><td>Confirmación (sin conflictos, publicado)</td><td><code>.dsg-notice--success</code></td><td>check</td></tr></tbody></table></div>
+<h4>Reglas</h4>
+<ul>
+<li>Estructura: ícono 22px + <code>__kind</code> (mayúsculas, color de severidad) + <code>__title</code> + <code>__body</code> opcional.</li>
+<li>La severidad se lee en el texto de <code>__kind</code>, no solo en el color.</li>
+<li>Ordena por severidad: bloqueos primero.</li>
+<li>Mensajes de estado en vivo usan <code>role=&quot;status&quot;</code>.</li>
+</ul></div></details>
+</section>
+<section id="c-scorecard" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-scorecard-t">
+<div class="comp__head"><h3 id="c-scorecard-t">Scorecard</h3><span class="dsg-subtle">Indicadores de Inicio y del panel</span></div>
+<p class="comp__sum">Indicador numérico con etiqueta, valor y nota de contexto; se usa en la fila de indicadores de Inicio y en el Resumen del panel.</p>
+<div class="comp__stage dsg-mesh">
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:20px">
+  <div class="dsg-glass dsg-kpi">
+    <span class="dsg-kpi__label">Proyectos activos<span class="dsg-dot" aria-hidden="true"></span></span>
+    <span class="dsg-kpi__value">12</span>
+    <span class="dsg-kpi__note">En planeación, desarrollo o piloto</span>
+  </div>
+  <div class="dsg-glass dsg-kpi">
+    <span class="dsg-kpi__label">Soluciones liberadas<span class="dsg-dot" style="--c:var(--dsg-success)" aria-hidden="true"></span></span>
+    <span class="dsg-kpi__value">8</span>
+    <span class="dsg-kpi__note">Finalizadas y en operación</span>
+  </div>
+  <div class="dsg-glass dsg-kpi">
+    <span class="dsg-kpi__label">Impacto acumulado<span class="dsg-date dsg-date--estimated" style="height:24px;font-size:11px;color:var(--dsg-warning);border-color:var(--dsg-warning)">Demostrativo</span></span>
+    <span class="dsg-kpi__value">—</span>
+    <span class="dsg-kpi__note">Se calculará con métricas reales</span>
+  </div>
+</div>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Reglas</h4>
+<ul>
+<li>Estructura: <code>__label</code> (con punto de color o badge) + <code>__value</code> (estilo <code>kpi</code>) + <code>__note</code> que dice qué se cuenta.</li>
+<li>Grid de 4 en escritorio con <code>repeat(auto-fit, minmax(min(230px, 100%), 1fr))</code>; una columna en móvil.</li>
+<li>Un indicador que todavía no se calcula con datos reales lleva el badge «Demostrativo» (borde punteado en warning) y nunca un número inventado: usa «—» hasta tener el dato.</li>
+<li>El punto de color identifica la serie (accent, success, accent-warm); es decorativo (<code>aria-hidden</code>).</li>
+<li>Si el número lleva a una lista (propuestas pendientes), la card entera es un <code>&lt;a&gt;</code>.</li>
+</ul></div></details>
+</section>
+<section id="c-progressbar" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-progressbar-t">
+<div class="comp__head"><h3 id="c-progressbar-t">ProgressBar</h3><span class="dsg-subtle">Progreso de proyecto en card y en detalle</span></div>
+<p class="comp__sum">Barra de avance de un proyecto: 6px en cards del catálogo y 10px en el detalle.</p>
+<div class="comp__stage dsg-mesh">
+<div class="dsg-glass" style="margin:20px;padding:22px;display:flex;flex-direction:column;gap:18px">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between;font-size:13px" class="dsg-muted"><span>Impacto esperado: reducir tiempos</span><span>45%</span></div>
+    <div class="dsg-progress" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45"><div class="dsg-progress__bar" style="width:45%"></div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-weight:600">Progreso general</span><span style="font:700 28px/1 var(--dsg-font-display)">70%</span></div>
+    <div class="dsg-progress dsg-progress--lg" role="progressbar" aria-label="Progreso general" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70"><div class="dsg-progress__bar dsg-progress__bar--gradient" style="width:70%"></div></div>
+  </div>
+</div>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Reglas</h4>
+<ul>
+<li>Siempre con <code>role=&quot;progressbar&quot;</code>, <code>aria-valuenow</code>, <code>aria-valuemin</code>, <code>aria-valuemax</code> y <code>aria-label</code>, y con el porcentaje escrito en texto.</li>
+<li>En cards, el color de la barra sigue el estado del proyecto con <code>--c</code> (accent, accent-warm, success).</li>
+<li>En el detalle, <code>.dsg-progress--lg</code> con <code>__bar--gradient</code> (accent → success) y una nota que dice cómo se calcula.</li>
+<li>Solo se muestra cuando el progreso se calcula a partir de hitos; si no aplica, se omite.</li>
+</ul></div></details>
+</section>
+<section id="c-newsticker" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-newsticker-t">
+<div class="comp__head"><h3 id="c-newsticker-t">NewsTicker</h3><span class="dsg-subtle">Cinta de actualizaciones del hero</span></div>
+<p class="comp__sum">Cinta de actualizaciones que corre al pie del hero de Inicio, al estilo de un noticiario.</p>
+<div class="comp__stage dsg-mesh">
+<div class="dsg-glass" style="margin:20px;overflow:hidden">
+  <div class="dsg-ticker" role="region" aria-label="Cinta de actualizaciones" style="border-top:0">
+    <span class="dsg-ticker__label">Al día</span>
+    <div class="dsg-ticker__viewport">
+      <ul class="dsg-ticker__track" id="track">
+        <li class="dsg-ticker__item"><span class="dsg-ticker__kind" style="--c:var(--dsg-success)">Liberación</span><a href="#" style="color:var(--dsg-ink);text-decoration:none">Asistente de documentación publica su versión 1.0</a></li>
+        <li class="dsg-ticker__item"><span class="dsg-ticker__kind">Hito</span><a href="#" style="color:var(--dsg-ink);text-decoration:none">Piloto concluido en Finanzas</a></li>
+        <li class="dsg-ticker__item"><span class="dsg-ticker__kind" style="--c:var(--dsg-warning)">Aviso</span><span>Ventana de mantenimiento el sábado</span></li>
+        <li class="dsg-ticker__item" aria-hidden="true"><span class="dsg-ticker__kind" style="--c:var(--dsg-success)">Liberación</span><span>Asistente de documentación publica su versión 1.0</span></li>
+        <li class="dsg-ticker__item" aria-hidden="true"><span class="dsg-ticker__kind">Hito</span><span>Piloto concluido en Finanzas</span></li>
+        <li class="dsg-ticker__item" aria-hidden="true"><span class="dsg-ticker__kind" style="--c:var(--dsg-warning)">Aviso</span><span>Ventana de mantenimiento el sábado</span></li>
+      </ul>
+    </div>
+    <div class="dsg-ticker__controls">
+      <button type="button" class="dsg-btn dsg-btn--icon" style="background:transparent;color:var(--dsg-ink)" aria-label="Pausar cinta" aria-pressed="false" id="pause">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 5v14M16 5v14"></path></svg></button>
+    </div>
+  </div>
+</div>
+
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Reglas</h4>
+<ul>
+<li>Etiqueta fija «Al día» en accent-warm + on-accent, a la izquierda.</li>
+<li>Cada ítem: tipo (Liberación en success, Hito en accent, Aviso en warning, Documentación en ink-muted) + titular que enlaza a su proyecto o recurso.</li>
+<li>La lista se duplica para el bucle continuo; la copia lleva <code>aria-hidden=&quot;true&quot;</code> para que el lector de pantalla no la lea dos veces.</li>
+<li>Velocidad: 70s por vuelta, lineal. Se pausa al pasar el cursor y con el botón de pausa (obligatorio, 44px, con <code>aria-label</code> que cambia).</li>
+<li>Con <code>prefers-reduced-motion: reduce</code> la cinta queda quieta; el enlace «Ver todas» lleva a la lista completa.</li>
+<li>Máximo 5 ítems; solo contenido publicado.</li>
+</ul></div></details>
+</section>
+<section id="c-field" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-field-t">
+<div class="comp__head"><h3 id="c-field-t">Field</h3><span class="dsg-subtle">Campos del formulario de contacto</span></div>
+<p class="comp__sum">Campo de formulario con etiqueta visible, control de vidrio y ayuda opcional; aplica a input, select y textarea.</p>
+<div class="comp__stage dsg-mesh">
+<form class="dsg-glass dsg-glass--panel" style="margin:20px;padding:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px" onsubmit="event.preventDefault()">
+  <label class="dsg-field" for="f-nombre">Nombre completo
+    <input id="f-nombre" class="dsg-input" type="text" autocomplete="name" placeholder="Nombre y apellidos"></label>
+  <label class="dsg-field" for="f-correo">Correo institucional
+    <input id="f-correo" class="dsg-input" type="email" autocomplete="email"></label>
+  <label class="dsg-field" for="f-area">Área
+    <select id="f-area" class="dsg-input"><option>Selecciona tu área</option><option>Finanzas</option></select></label>
+  <label class="dsg-field" for="f-proyecto">Proyecto relacionado <span class="dsg-field__hint">(opcional)</span>
+    <select id="f-proyecto" class="dsg-input"><option>Ninguno</option></select></label>
+  <label class="dsg-field" for="f-msg" style="grid-column:1 / -1">Mensaje
+    <textarea id="f-msg" class="dsg-input" rows="3"></textarea>
+    <span class="dsg-field__hint">Entre 20 y 2000 caracteres.</span></label>
+</form>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Reglas</h4>
+<ul>
+<li>Toda entrada va dentro de un <code>&lt;label class=&quot;dsg-field&quot;&gt;</code> o enlazada con <code>for</code>/<code>id</code>. Nunca uses el placeholder como etiqueta.</li>
+<li>Control <code>.dsg-input</code>: 48px de alto, radius-md, fondo glass, borde line, texto ink.</li>
+<li>Ayuda y límites en <code>.dsg-field__hint</code> (ink-subtle, 12px). Los opcionales se marcan «(opcional)»; los demás son obligatorios.</li>
+<li>Errores: borde y texto en danger, mensaje que dice qué corregir, enlazado con <code>aria-describedby</code>.</li>
+<li>Opciones excluyentes visibles (tipo de solicitud) como radios en tarjetas de 48px, con la elegida en accent.</li>
+<li>Dos columnas en escritorio con <code>repeat(auto-fit, minmax(min(220px, 100%), 1fr))</code>; una en móvil.</li>
+</ul></div></details>
+</section>
+<section id="c-diff" class="dsg-glass dsg-glass--panel comp" aria-labelledby="c-diff-t">
+<div class="comp__head"><h3 id="c-diff-t">Diff</h3><span class="dsg-subtle">Comparación de versión publicada y propuesta</span></div>
+<p class="comp__sum">Comparación campo por campo entre la versión publicada y una propuesta de cambio, para flujos de revisión.</p>
+<div class="comp__stage dsg-mesh">
+<div class="dsg-glass" style="margin:20px;overflow:hidden">
+  <div style="display:grid;grid-template-columns:140px minmax(0,1fr) minmax(0,1fr);background:var(--dsg-glass-strong);font-size:12px;color:var(--dsg-ink-subtle)"><span style="padding:10px 14px">Campo</span><span style="padding:10px 14px;border-left:1px solid var(--dsg-line)">Publicado · v3</span><span style="padding:10px 14px;border-left:1px solid var(--dsg-line)">Propuesta</span></div>
+  <div style="display:grid;grid-template-columns:140px minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--dsg-line);font-size:14px"><span style="padding:14px;font-weight:600">Estado</span><span style="padding:14px;border-left:1px solid var(--dsg-line)"><del class="dsg-del">Planeado</del></span><span style="padding:14px;border-left:1px solid var(--dsg-line)"><ins class="dsg-ins">En desarrollo</ins></span></div>
+  <div style="display:grid;grid-template-columns:140px minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--dsg-line);font-size:14px"><span style="padding:14px;font-weight:600">Descripción</span><span style="padding:14px;border-left:1px solid var(--dsg-line)" class="dsg-muted">Automatiza la conciliación <del class="dsg-del">mensual</del> de pagos.</span><span style="padding:14px;border-left:1px solid var(--dsg-line)" class="dsg-muted">Automatiza la conciliación <ins class="dsg-ins">diaria</ins> de pagos.</span></div>
+</div>
+</div>
+<details class="comp__doc"><summary>Guía de uso</summary><div class="prose"><h4>Reglas</h4>
+<ul>
+<li>Tres columnas: campo, «Publicado · vN», «Propuesta». En móvil, el campo arriba y las dos versiones apiladas.</li>
+<li>Usa los elementos semánticos <code>&lt;del class=&quot;dsg-del&quot;&gt;</code> e <code>&lt;ins class=&quot;dsg-ins&quot;&gt;</code>: el lector de pantalla anuncia eliminado/agregado.</li>
+<li>Eliminado: tachado sobre danger al 22%. Agregado: subrayado de 2px en success sobre success al 22%. Tachado y subrayado distinguen sin depender del color.</li>
+<li>Muestra solo los campos que cambiaron y su conteo en el título («Cambios propuestos · 4 campos»).</li>
+<li>Encima del diff, un Notice indica si hay conflicto con la versión publicada.</li>
+</ul></div></details>
+</section>
+
+</section>
+
+<section id="guia" class="sec" aria-labelledby="guia-t">
+<h2 id="guia-t">Guía</h2>
+<section id="g-principios" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-principios-t"><h3 id="g-principios-t">Principios</h3><p>1. <strong>Claridad antes que efecto.</strong> El vidrio organiza la información; nunca baja el contraste del texto. Todo texto pasa 4.5:1 en ambos temas.</p>
+<p>2. <strong>Transparencia también en el contenido.</strong> Fechas estimadas se ven distintas de las confirmadas; indicadores demostrativos se marcan como tales; el roadmap comunica intención, no compromisos.</p>
+<p>3. <strong>Un color, un significado.</strong> accent = acción y «En desarrollo»; accent-warm = piloto y pendientes; success = liberado y confirmado; danger = bloqueo. El color siempre va con texto o ícono.</p>
+<p>4. <strong>Dos superficies, un sistema.</strong> La superficie pública y la administrativa usan los mismos componentes; la administrativa se distingue por el tono <code>admin</code> (violeta) y un fondo con más violeta.</p></section>
+<section id="g-temas" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-temas-t"><h3 id="g-temas-t">Temas</h3><p>El tema se fija con <code>data-theme</code> en <code>&lt;html&gt;</code>:</p>
+<div class="tblwrap"><table><thead><tr><th>Atributo</th><th>Resultado</th></tr></thead><tbody><tr><td><code>data-theme=&quot;dark&quot;</code></td><td>Modo oscuro (predeterminado del sistema).</td></tr><tr><td><code>data-theme=&quot;light&quot;</code></td><td>Modo claro.</td></tr><tr><td>sin atributo</td><td>Sigue la preferencia del sistema (<code>prefers-color-scheme</code>).</td></tr></tbody></table></div>
+<p>La elección del usuario se guarda (cookie o <code>localStorage</code>) y se aplica con un script en <code>&lt;head&gt;</code> antes de pintar, para evitar el parpadeo. Todos los colores son variables CSS, así que los componentes no necesitan variantes <code>dark:</code>; el preset de Tailwind también registra <code>dark:</code> (por <code>data-theme=&quot;dark&quot;</code> o la clase <code>.dark</code>) para los casos puntuales.</p></section>
+<section id="g-liquid-glass" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-liquid-glass-t"><h3 id="g-liquid-glass-t">Liquid Glass</h3><p>Una superficie de vidrio tiene cinco capas, todas en tokens:</p>
+<div class="tblwrap"><table><thead><tr><th>Capa</th><th>Token</th><th>Oscuro</th><th>Claro</th></tr></thead><tbody><tr><td>Relleno</td><td><code>glass</code></td><td>blanco al 5.5%</td><td>blanco al 46%, con brillo diagonal 74% → 30%</td></tr><tr><td>Borde</td><td><code>glass-rim</code></td><td>blanco al 12%</td><td>blanco al 88% (reflejo)</td></tr><tr><td>Luz superior</td><td><code>glass-highlight</code></td><td>blanco al 10%</td><td>blanco</td></tr><tr><td>Sombra</td><td><code>shadow-glass</code></td><td>sombra negra difusa</td><td>canto inferior + contorno de 0.5px + sombra azulada</td></tr><tr><td>Desenfoque</td><td><code>backdrop-glass</code> / <code>backdrop-glass-light</code></td><td>blur 22px, saturación 160%</td><td>blur 26px, saturación 190%</td></tr></tbody></table></div>
+<p>El vidrio necesita color detrás: toda página lleva <code>.dsg-mesh</code> (manchas difusas azul, turquesa, violeta y ámbar sobre <code>canvas</code>). En claro las manchas son más intensas y cubren toda la altura; sin ellas el vidrio claro se ve plano. La superficie administrativa usa <code>.dsg-mesh--admin</code>.</p>
+<p>Jerarquía: <code>.dsg-glass--hero</code> (32px) → <code>.dsg-glass--panel</code> (26px) → <code>.dsg-glass</code> (22px) → <code>.dsg-inset</code> (fila elevada, 18px). No se anida vidrio dentro de vidrio.</p></section>
+<section id="g-color" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-color-t"><h3 id="g-color-t">Color</h3><ul>
+<li><strong>Texto:</strong> <code>ink</code> (principal), <code>ink-muted</code> (descripciones), <code>ink-subtle</code> (metadatos, mínimo 13px).</li>
+<li><strong>Acción:</strong> <code>accent</code> con <code>on-accent</code> encima. Una sola acción primaria por vista.</li>
+<li><strong>Semánticos:</strong> <code>success</code>, <code>warning</code> (= <code>accent-warm</code>), <code>danger</code>. Fondos semánticos al 9–15% del tono y borde al 28–35%, generados con <code>color-mix()</code> desde una sola variable <code>--c</code>.</li>
+<li><strong>Portal interno:</strong> <code>admin</code> para la marca «Panel interno», el rol ADMIN y el ícono activo del menú.</li>
+<li>En claro los acentos se oscurecen (accent <code>#0a6a86</code>, accent-warm <code>#965700</code>) y <code>on-accent</code> pasa a blanco, para que el texto sobre relleno siga siendo legible.</li>
+</ul></section>
+<section id="g-tipografa" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-tipografa-t"><h3 id="g-tipografa-t">Tipografía</h3><ul>
+<li><strong>Bricolage Grotesque</strong> (display): títulos, valores de indicadores. Peso 700, tracking negativo.</li>
+<li><strong>IBM Plex Sans</strong> (texto): interfaz y párrafos. 400 / 500 / 600.</li>
+<li><strong>IBM Plex Mono</strong> (utilidad): antetítulos (<code>eyebrow</code>, en accent) y encabezados de grupo (<code>overline</code>), siempre en mayúsculas con tracking amplio; también fechas en registros.</li>
+</ul>
+<p>La galería carga las fuentes locales desde <code>assets/fonts/fonts.css</code> (WOFF2, subset latin, licencias OFL). En producto puedes usar estos mismos archivos, Google Fonts o <code>next/font/google</code>.</p>
+<p><code>assets/fonts/fonts.css</code></p>
+<p>En Next.js, cárgalas con <code>next/font/google</code> y asigna <code>--dsg-font-display</code>, <code>--dsg-font-sans</code> y <code>--dsg-font-mono</code>.</p></section>
+<section id="g-espacio-radios-y-layout" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-espacio-radios-y-layout-t"><h3 id="g-espacio-radios-y-layout-t">Espacio, radios y layout</h3><ul>
+<li>Escala de 4px idéntica a Tailwind (<code>space-4</code> = <code>p-4</code> = 16px). Cards con <code>p-6</code>, paneles con <code>p-7</code>, página con <code>p-5</code>.</li>
+<li>Radios: <code>radius-md</code> 14px en controles y menú, <code>radius-xl</code> 22px en cards, <code>radius-full</code> en botones pill, chips y barras.</li>
+<li>Layout de app: menú lateral (<code>flex: 1 1 240px</code>) + contenido (<code>flex: 999 1 560px; min-width: 0</code>) en una fila <code>flex-wrap</code>; en móvil el menú se apila arriba. Grids con <code>repeat(auto-fit, minmax(min(Npx, 100%), 1fr))</code>.</li>
+<li>Objetivo táctil mínimo de 44px.</li>
+</ul></section>
+<section id="g-iconografa" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-iconografa-t"><h3 id="g-iconografa-t">Iconografía</h3><p>Íconos de línea de 24×24, trazo 1.8 (2–2.4 para checks y flechas pequeñas), extremos redondeados, <code>stroke=&quot;currentColor&quot;</code>. Decorativos con <code>aria-hidden=&quot;true&quot;</code>; un botón solo con ícono lleva <code>aria-label</code>. No se usan emoji.</p></section>
+<section id="g-movimiento" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-movimiento-t"><h3 id="g-movimiento-t">Movimiento</h3><p>Poco y con propósito: la cinta de noticias (70s por vuelta, lineal, con pausa), las órbitas del logo del hero (11–16s por vuelta), hover de 200ms en botones primarios y cards (sube 1–2px). Con <code>prefers-reduced-motion: reduce</code> todo queda quieto.</p></section>
+<section id="g-accesibilidad-wcag-2-2-aa" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-accesibilidad-wcag-2-2-aa-t"><h3 id="g-accesibilidad-wcag-2-2-aa-t">Accesibilidad (WCAG 2.2 AA)</h3><ul>
+<li>Contraste verificado de <code>ink</code>, <code>ink-muted</code> e <code>ink-subtle</code> sobre vidrio en ambos temas, y de <code>on-accent</code> sobre cada relleno.</li>
+<li>Foco visible: contorno de 2px en <code>accent</code> con 3px de separación en todo control.</li>
+<li>Elementos reales: <code>&lt;a href&gt;</code> para navegar, <code>&lt;button&gt;</code> para acciones, <code>&lt;label&gt;</code> en cada campo.</li>
+<li>Estado nunca solo por color: chips con texto, avisos con tipo escrito, diffs con tachado/subrayado.</li>
+</ul></section>
+<section id="g-uso-con-tailwind" class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="g-uso-con-tailwind-t"><h3 id="g-uso-con-tailwind-t">Uso con Tailwind</h3><p>Archivos de este sistema:</p>
+<div class="tblwrap"><table><thead><tr><th>Archivo</th><th>Para qué</th></tr></thead><tbody><tr><td><code>tailwind/dsg-preset.js</code></td><td>Preset de Tailwind 3.4: colores, fuentes, tamaños, radios, sombra y blur del sistema.</td></tr><tr><td><code>tailwind/globals.css</code></td><td><code>app/globals.css</code>: variables de ambos temas en <code>@layer base</code> y lugar para la capa de componentes.</td></tr><tr><td><code>components/bundle.css</code></td><td>Clases <code>.dsg-*</code> (vidrio, botones, chips, menú, cinta…). Va dentro de <code>@layer components</code>.</td></tr><tr><td><code>tokens.json</code></td><td>Fuente de verdad de los tokens.</td></tr></tbody></table></div>
+<pre class="code"><code>// tailwind.config.js
+module.exports = {
+  presets: [require(&#x27;./tailwind/dsg-preset&#x27;)],
+  content: [&#x27;./src/**/*.{ts,tsx}&#x27;],
+};</code></pre>
+<pre class="code"><code>&lt;html data-theme=&quot;dark&quot;&gt;
+  &lt;body class=&quot;dsg-mesh font-sans text-ink&quot;&gt;
+    &lt;article class=&quot;dsg-glass p-6&quot;&gt;
+      &lt;p class=&quot;font-mono text-eyebrow uppercase text-accent&quot;&gt;Catálogo&lt;/p&gt;
+      &lt;h1 class=&quot;font-display text-display-lg text-ink&quot;&gt;Proyectos&lt;/h1&gt;
+      &lt;span class=&quot;dsg-chip dsg-chip--accent&quot;&gt;En desarrollo&lt;/span&gt;
+    &lt;/article&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>Clases del preset: <code>bg-canvas</code>, <code>text-ink</code>, <code>text-ink-muted</code>, <code>text-ink-subtle</code>, <code>bg-glass</code>, <code>bg-glass-strong</code>, <code>border-glass-rim</code>, <code>border-line</code>, <code>bg-accent</code>, <code>text-accent-on</code>, <code>text-success</code>, <code>text-danger</code>, <code>text-admin</code>, <code>rounded-glass</code>, <code>rounded-panel</code>, <code>rounded-hero</code>, <code>shadow-glass</code>, <code>backdrop-blur-glass</code>, <code>font-display</code>, <code>text-kpi</code>, <code>animate-ticker</code>.</p>
+<p>Como los colores son variables con valor completo, los modificadores de opacidad de Tailwind (<code>bg-accent/20</code>) no aplican; para un tono translúcido usa la clase de componente (<code>.dsg-chip--accent</code>) o <code>color-mix()</code>.</p></section>
+
+<section class="dsg-glass dsg-glass--panel prose guide" aria-labelledby="preset-t"><h3 id="preset-t">tailwind/dsg-preset.js</h3>
+<div class="codebox"><button type="button" class="copy" data-copy-from="preset-code">Copiar</button><pre class="code"><code id="preset-code">/**
+ * Design System Glass — preset de Tailwind CSS (v3.4).
+ * Uso en tailwind.config.js:
+ *   module.exports = { presets: [require(&#x27;./tailwind/dsg-preset&#x27;)], content: [&#x27;./src/**\/*.{ts,tsx}&#x27;] }
+ * Los colores apuntan a variables CSS definidas en tailwind/globals.css,
+ * así que cambian solos con &lt;html data-theme=&quot;dark|light&quot;&gt; sin usar dark:.
+ */
+module.exports = {
+  darkMode: [&#x27;variant&#x27;, [&#x27;[data-theme=&quot;dark&quot;] &amp;&#x27;, &#x27;.dark &amp;&#x27;]],
+  theme: {
+    extend: {
+      colors: {
+        canvas: &#x27;var(--dsg-canvas)&#x27;,
+        ink: {
+          DEFAULT: &#x27;var(--dsg-ink)&#x27;,
+          muted: &#x27;var(--dsg-ink-muted)&#x27;,
+          subtle: &#x27;var(--dsg-ink-subtle)&#x27;,
+        },
+        glass: {
+          DEFAULT: &#x27;var(--dsg-glass)&#x27;,
+          strong: &#x27;var(--dsg-glass-strong)&#x27;,
+          rim: &#x27;var(--dsg-glass-rim)&#x27;,
+          highlight: &#x27;var(--dsg-glass-highlight)&#x27;,
+        },
+        line: &#x27;var(--dsg-line)&#x27;,
+        accent: {
+          DEFAULT: &#x27;var(--dsg-accent)&#x27;,
+          warm: &#x27;var(--dsg-accent-warm)&#x27;,
+          on: &#x27;var(--dsg-on-accent)&#x27;,
+        },
+        success: &#x27;var(--dsg-success)&#x27;,
+        warning: &#x27;var(--dsg-warning)&#x27;,
+        danger: &#x27;var(--dsg-danger)&#x27;,
+        admin: &#x27;var(--dsg-admin)&#x27;,
+      },
+      fontFamily: {
+        display: [&#x27;&quot;Bricolage Grotesque&quot;&#x27;, &#x27;system-ui&#x27;, &#x27;sans-serif&#x27;],
+        sans: [&#x27;&quot;IBM Plex Sans&quot;&#x27;, &#x27;system-ui&#x27;, &#x27;sans-serif&#x27;],
+        mono: [&#x27;&quot;IBM Plex Mono&quot;&#x27;, &#x27;ui-monospace&#x27;, &#x27;monospace&#x27;],
+      },
+      fontSize: {
+        &#x27;display-xl&#x27;: [&#x27;96px&#x27;, { lineHeight: &#x27;0.95&#x27;, letterSpacing: &#x27;-0.035em&#x27;, fontWeight: &#x27;700&#x27; }],
+        &#x27;display-lg&#x27;: [&#x27;52px&#x27;, { lineHeight: &#x27;1&#x27;, letterSpacing: &#x27;-0.03em&#x27;, fontWeight: &#x27;700&#x27; }],
+        kpi: [&#x27;52px&#x27;, { lineHeight: &#x27;1&#x27;, letterSpacing: &#x27;-0.03em&#x27;, fontWeight: &#x27;700&#x27; }],
+        &#x27;heading-lg&#x27;: [&#x27;28px&#x27;, { lineHeight: &#x27;1.15&#x27;, letterSpacing: &#x27;-0.015em&#x27;, fontWeight: &#x27;700&#x27; }],
+        &#x27;heading-md&#x27;: [&#x27;24px&#x27;, { lineHeight: &#x27;1.2&#x27;, letterSpacing: &#x27;-0.01em&#x27;, fontWeight: &#x27;700&#x27; }],
+        &#x27;heading-sm&#x27;: [&#x27;20px&#x27;, { lineHeight: &#x27;1.25&#x27;, fontWeight: &#x27;700&#x27; }],
+        &#x27;body-lg&#x27;: [&#x27;17px&#x27;, { lineHeight: &#x27;1.55&#x27; }],
+        body: [&#x27;15px&#x27;, { lineHeight: &#x27;1.5&#x27; }],
+        &#x27;body-sm&#x27;: [&#x27;14px&#x27;, { lineHeight: &#x27;1.5&#x27; }],
+        caption: [&#x27;13px&#x27;, { lineHeight: &#x27;1.45&#x27; }],
+        eyebrow: [&#x27;12px&#x27;, { lineHeight: &#x27;1.3&#x27;, letterSpacing: &#x27;0.14em&#x27;, fontWeight: &#x27;500&#x27; }],
+        overline: [&#x27;11px&#x27;, { lineHeight: &#x27;1.3&#x27;, letterSpacing: &#x27;0.12em&#x27;, fontWeight: &#x27;500&#x27; }],
+      },
+      borderRadius: {
+        control: &#x27;14px&#x27;,
+        row: &#x27;18px&#x27;,
+        glass: &#x27;22px&#x27;,
+        panel: &#x27;26px&#x27;,
+        hero: &#x27;32px&#x27;,
+      },
+      boxShadow: {
+        glass: &#x27;var(--dsg-shadow-glass)&#x27;,
+      },
+      backdropBlur: {
+        glass: &#x27;22px&#x27;,
+        &#x27;glass-light&#x27;: &#x27;26px&#x27;,
+      },
+      backdropSaturate: {
+        160: &#x27;1.6&#x27;,
+        190: &#x27;1.9&#x27;,
+      },
+      keyframes: {
+        ticker: { from: { transform: &#x27;translateX(0)&#x27; }, to: { transform: &#x27;translateX(-50%)&#x27; } },
+      },
+      animation: {
+        ticker: &#x27;ticker 70s linear infinite&#x27;,
+      },
+    },
+  },
+};
+</code></pre></div>
+</section>
+</section>
+
+<footer class="dsg-subtle" style="font-size:13px;padding:8px 4px 20px">Design System Glass · v2.0 · documentación y componentes</footer>
+</main>
+</div>
+<div class="toast dsg-glass" role="status" aria-live="polite" id="toast"></div>
+<script>
+(function(){
+  var root=document.documentElement, btns=document.querySelectorAll('[data-theme-set]');
+  function sync(){
+    var t=root.getAttribute('data-theme');
+    btns.forEach(function(b){b.setAttribute('aria-pressed', String(b.dataset.themeSet===t));});
+    var cs=getComputedStyle(root);
+    [['v-glass','--dsg-glass'],['v-glass-rim','--dsg-glass-rim'],['v-glass-highlight','--dsg-glass-highlight'],['v-shadow-glass','--dsg-shadow-glass']].forEach(function(p){var el=document.getElementById(p[0]); if(el) el.textContent=cs.getPropertyValue(p[1]).trim();});
+    var bd=document.getElementById('v-backdrop'); if(bd) bd.textContent=cs.getPropertyValue(t==='light'?'--dsg-backdrop-glass-light':'--dsg-backdrop-glass').trim();
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){root.setAttribute('data-theme',b.dataset.themeSet);try{localStorage.setItem('dsg-theme',b.dataset.themeSet);}catch(e){}sync();});});
+  sync();
+  var toast=document.getElementById('toast'), tm;
+  function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tm);tm=setTimeout(function(){toast.classList.remove('on');},1600);}
+  function fallback(text){var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');say('Copiado');}catch(e){say('Selecciona y copia manualmente');}ta.remove();}
+  document.addEventListener('click',function(e){
+    var c=e.target.closest('.copy'); if(!c) return;
+    var text=c.dataset.copy || (document.getElementById(c.dataset.copyFrom)||{}).textContent || '';
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){say('Copiado');},function(){fallback(text);});} else fallback(text);
+  });
+  document.querySelectorAll('.dsg-seg:not([aria-label="Tema"])').forEach(function(g){
+    g.addEventListener('click',function(e){var b=e.target.closest('.dsg-seg__btn'); if(!b) return; var a=b.hasAttribute('aria-selected')?'aria-selected':'aria-pressed'; g.querySelectorAll('.dsg-seg__btn').forEach(function(x){x.setAttribute(a,String(x===b));});});
+  });
+  var pb=document.getElementById('pause'), tr=document.getElementById('track');
+  if(pb&&tr) pb.addEventListener('click',function(){var p=tr.classList.toggle('is-paused');pb.setAttribute('aria-pressed',String(p));pb.setAttribute('aria-label',p?'Reanudar cinta':'Pausar cinta');});
+  document.querySelectorAll('.comp__stage a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
+})();
+</script>
+</body>
+</html>
