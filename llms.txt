@@ -119,4 +119,4 @@ No hay dependencias ni `npm install` obligatorio. Requiere Node 20+.
 - El validador comprueba estructura y contraste de tokens, no estética ni lectura con lector de pantalla.
 - La galería y las previews funcionan sin red: Tailwind Play y fuentes están vendorizados.
 - `tailwind/play-config.js` se genera desde el preset; no se edita a mano.
-- Licencia MIT; el paquete está preparado para npm pero no se ha publicado.
+- Licencia MIT; la publicación npm queda pendiente para una fase futura.

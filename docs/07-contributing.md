@@ -254,6 +254,8 @@ Antes de un release:
 
 ### Publicación npm
 
+La publicación está pendiente para una fase futura; estos pasos quedan documentados para cuando se decida ejecutarla.
+
 El paquete se llama `@dannyaceves/design-system-glass` y declara `license: MIT`. Es open source; publicarlo mantiene la licencia MIT. Conserva `LICENSE` y los avisos de las fuentes OFL y de Tailwind Play.
 
 ```bash

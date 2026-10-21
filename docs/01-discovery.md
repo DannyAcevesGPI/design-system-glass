@@ -111,7 +111,7 @@ La v2.0 convierte ese material en un sistema mantenible: **una fuente de verdad,
 Cerradas:
 
 1. **Licencia:** MIT, con `LICENSE` a nombre de Daniel Aceves (2026). El código y la documentación son open source; las fuentes conservan su licencia OFL, Tailwind Play su licencia MIT y las marcas se rigen por `TRADEMARKS.md`.
-2. **Publicación:** paquete preparado como `@dannyaceves/design-system-glass`, con `publishConfig.access: public`. La publicación real queda pendiente de credenciales y del scope npm.
+2. **Publicación:** paquete preparado como `@dannyaceves/design-system-glass`, con `publishConfig.access: public`. Se decidió no publicarlo en esta fase; queda pendiente para una fase futura, cuando existan credenciales y se confirme el momento del release.
 3. **Soporte de navegadores:** evergreen moderno (Chrome/Edge 111+, Firefox 113+, Safari 16.4+). Sin polyfills.
 4. **Board histórico:** eliminado del repositorio.
 

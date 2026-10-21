@@ -114,10 +114,12 @@ Abre `index.html` para comparar con la galería. Cada componente tiene su vista 
 
 ## Alternativa: paquete npm
 
-El paquete se llama `@dannyaceves/design-system-glass` y declara `license: MIT`. Es open source; conserva el aviso de copyright y la licencia al redistribuirlo.
+La publicación en npm queda **pendiente para una fase futura**. El paquete `@dannyaceves/design-system-glass` está preparado y declara `license: MIT`, pero todavía no está en el registro.
+
+Cuando se publique, la instalación será:
 
 ```bash
 npm install @dannyaceves/design-system-glass
 ```
 
-Copia `tailwind/globals.css` y `tailwind/dsg-preset.js` desde `node_modules/@dannyaceves/design-system-glass/`, o importa los archivos con la ruta del paquete según tu bundler. Las fuentes están en `assets/fonts/`.
+Mientras tanto, usa la copia de archivos de las secciones anteriores. Si trabajas desde el repo, copia `tailwind/globals.css` y `tailwind/dsg-preset.js`; las fuentes están en `assets/fonts/`.

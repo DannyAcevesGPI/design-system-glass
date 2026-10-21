@@ -210,7 +210,7 @@ El validador no tiene dependencias y corre en Node 20+. También se ejecuta en C
 | Componentes base (13) | Estable |
 | Galería y documentación | Estable |
 | Capa para agentes | Estable |
-| Librería publicada en npm | Preparada, sin publicar |
+| Publicación npm | Pendiente para una fase futura |
 | Licencia | MIT |
 | Navegadores | Chrome/Edge 111+, Firefox 113+, Safari 16.4+ |
 | Modo offline | Galería y previews sin red |
