@@ -1,0 +1,122 @@
+# Design System Glass
+
+> Sistema de diseño front-end en archivos copiables: tokens semánticos, superficies de vidrio, componentes accesibles y documentación para personas y agentes. Namespace `dsg-*` / `--dsg-*`. v2.0.0. Español; nombres técnicos en inglés.
+
+Empieza por `AGENTS.md`. Si la tarea es pequeña, con el README del componente, su entrada en `components/registry.json` y su `preview.html` suele bastar.
+
+## Contrato mínimo
+
+- La marca es exactamente **Design System Glass**.
+- `tokens.json` es la fuente de verdad de valores; `components/bundle.css` es la fuente de clases.
+- No edites `tokens.css`, `tailwind/globals.css` ni `tailwind/play-config.js`: se generan con `npm run build`.
+- No inventes tokens, colores, variantes ni clases. Si falta algo, documéntalo como extensión.
+- Prohibido: hexadecimales y `rgb()` en componentes, `hub-*`, `--canvas` o `--accent` sin prefijo.
+- No anides `.dsg-glass` dentro de `.dsg-glass`: usa `.dsg-inset`.
+- El color nunca es la única señal de estado: añade texto o ícono.
+- Usa `<button>` o `<a href>`, nunca `div` con `onClick`. Usa `<label>` visible, nunca el placeholder como etiqueta.
+- Todo control necesita foco visible; objetivo táctil mínimo 44×44 px (48 px en botones); respeta `prefers-reduced-motion`.
+- Un componente nuevo necesita `README.md`, `preview.html` y entrada en `components/registry.json`.
+- Termina con `npm run build && npm run validate`.
+
+## Orden de lectura
+
+1. `AGENTS.md`: reglas no negociables, mapa y definición de terminado.
+2. `components/registry.json`: qué usar, cuándo evitarlo, clases y archivos.
+3. El `README.md` del componente objetivo.
+4. `components/bundle.css` y `preview.html` del componente.
+5. Según la tarea: `docs/03-tokens.md`, `docs/04-components.md`, `docs/05-brand.md`, `docs/06-ai-experience.md`.
+
+## Mapa de archivos
+
+- `README.md`: portada de marca, quick start y catálogo.
+- `INSTALACION.md`: instalación en Next.js + Tailwind CSS 3.4.
+- `AGENTS.md`: contrato operativo para agentes.
+- `tokens.json`: tokens v2 con dark, light y `usage` por token.
+- `tokens.css`: generado; variables `--dsg-*` y tipografía.
+- `components/bundle.css`: fuente de las clases `dsg-*`.
+- `components/registry.json`: catálogo machine-readable (13 componentes).
+- `components/registry.schema.json`: esquema del registro.
+- `schema/tokens.schema.json`: esquema de `tokens.json`.
+- `tailwind/dsg-preset.js`: preset de Tailwind 3.4.
+- `tailwind/globals.css`: generado; base + componentes.
+- `tailwind/play-config.js`: generado; config del Tailwind Play CDN para previews.
+- `tailwind/vendor/`: Tailwind Play 3.4.17 local (MIT) para previews sin red.
+- `index.html`: galería navegable; documentación visual.
+- `assets/brand/`: banner, logo, logo para fondo claro, marca y favicon (SVG).
+- `assets/fonts/`: WOFF2 locales, `fonts.css` y licencias OFL.
+- `docs/`: documentación extensa; índice en `docs/README.md`.
+- `scripts/build.mjs`: genera los artefactos desde `tokens.json` y `bundle.css`.
+- `scripts/validate.mjs`: validador sin dependencias.
+- `scripts/codemod-v1-to-v2.mjs`: ayuda de migración.
+- `CONTRIBUTING.md`: flujo para contribuir y validar.
+- `CODE_OF_CONDUCT.md`: convivencia y reporte de conducta.
+- `SECURITY.md`: reporte privado de vulnerabilidades.
+- `TRADEMARKS.md`: uso del nombre, el logo y los assets de marca.
+- `LICENSE`: licencia MIT; conserva el aviso de copyright al redistribuir.
+
+## Componentes
+
+| id | Componente | Para qué |
+| --- | --- | --- |
+| cover | Cover | Portada de marca con hero de vidrio y átomo animado. |
+| glass | Glass | Superficie translúcida base; paneles, hero, menú y modales. |
+| button | Button | Acciones primarias, secundarias y botones de decisión. |
+| segmented-control | SegmentedControl | 2–4 opciones excluyentes para cambiar vista o periodo. |
+| nav-item | NavItem | Navegación lateral con ícono, estado activo y contador. |
+| status-chip | StatusChip | Estado con texto y color; tag neutro de categoría. |
+| date-badge | DateBadge | Fecha confirmada frente a fecha estimada. |
+| notice | Notice | Aviso por severidad: bloqueo, dependencia, comunicado, confirmación. |
+| scorecard | Scorecard | Indicador numérico con etiqueta y contexto. |
+| progress-bar | ProgressBar | Avance calculado por hitos; variante compacta y grande. |
+| news-ticker | NewsTicker | Cinta de actualizaciones pausable al pie de un hero. |
+| field | Field | Campo con etiqueta visible, control de vidrio y ayuda. |
+| diff | Diff | Comparación entre versión publicada y propuesta. |
+
+## Temas y tokens
+
+- Tema: `data-theme="dark"` (predeterminado), `data-theme="light"`; sin atributo sigue `prefers-color-scheme`.
+- Tokens semánticos: `canvas`, `ink`, `ink-muted`, `ink-subtle`, `glass`, `glass-strong`, `glass-rim`, `glass-highlight`, `line`, `accent`, `accent-warm`, `on-accent`, `success`, `warning`, `danger`, `admin`.
+- En CSS: `var(--dsg-ink)`. En Tailwind: `text-ink`, `bg-canvas`, `border-glass-rim`.
+- `warning` es alias de `accent-warm`, no un color nuevo.
+- No uses `bg-accent/20`: la variable es un color completo. Usa `color-mix()` o una clase.
+
+## Comandos
+
+```bash
+npm run build      # regenera tokens.css, tailwind/globals.css y play-config.js
+npm run validate   # build --check + integridad, tokens, contraste, a11y, enlaces y previews
+npm run check      # alias de validate
+npm run serve      # http://localhost:4173
+npm run codemod    # ayuda de migración v1 → v2
+```
+
+No hay dependencias ni `npm install` obligatorio. Requiere Node 20+.
+
+## Documentación
+
+- `docs/README.md`: índice y rutas por rol.
+- `docs/01-discovery.md`: auditoría, hallazgos, riesgos y hoja de ruta.
+- `docs/02-architecture.md`: capas, flujo de tokens, theming y extensión.
+- `docs/03-tokens.md`: referencia de color, tipografía, espacio, radios, sombras y backdrop.
+- `docs/04-components.md`: catálogo, composición, accesibilidad y patrones.
+- `docs/05-brand.md`: marca, logo animado, portada, voz y assets.
+- `docs/06-ai-experience.md`: flujo para agentes, guardrails, recetas y prompt.
+- `docs/07-contributing.md`: añadir tokens, componentes, docs y releases.
+- `docs/08-migration.md`: migración del namespace anterior; única excepción que lo menciona.
+- `docs/09-audit.md`: evidencia de accesibilidad, contraste y regresión visual.
+
+## Definición de terminado
+
+- Usa tokens y clases existentes, o documenta la extensión.
+- Funciona en dark y light; operable con teclado y con foco visible.
+- El estado no depende solo del color; respeta `prefers-reduced-motion`.
+- Si es componente: preview + README + registro actualizados.
+- `npm run build && npm run validate` pasa.
+- El reporte final dice qué cambió, qué se validó y qué queda abierto.
+
+## Límites conocidos
+
+- El validador comprueba estructura y contraste de tokens, no estética ni lectura con lector de pantalla.
+- La galería y las previews funcionan sin red: Tailwind Play y fuentes están vendorizados.
+- `tailwind/play-config.js` se genera desde el preset; no se edita a mano.
+- Licencia MIT; el paquete está preparado para npm pero no se ha publicado.

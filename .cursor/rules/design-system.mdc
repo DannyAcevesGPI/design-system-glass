@@ -1,0 +1,56 @@
+---
+description: Reglas de Design System Glass para cualquier cambio de UI, tokens, componentes o documentación.
+globs: ["**/*.{html,css,js,jsx,ts,tsx,md,json}"]
+alwaysApply: true
+---
+
+# Design System Glass
+
+Lee y respeta [`AGENTS.md`](../../AGENTS.md). Es el contrato operativo; este archivo es un recordatorio para Cursor y no lo reemplaza.
+
+## Contexto
+
+- Sistema de diseño en archivos copiables, no una aplicación.
+- Stack de referencia: Next.js + Tailwind CSS 3.4.
+- Namespace: `dsg-*` y `--dsg-*`. Marca: **Design System Glass**.
+- Fuente de verdad: `tokens.json` (valores) y `components/bundle.css` (clases).
+- Documentación en español; nombres técnicos en inglés.
+
+## Antes de editar
+
+1. Busca el componente más cercano en `components/registry.json` y lee `useWhen` y `avoidWhen`.
+2. Lee el `README.md` y el `preview.html` del componente.
+3. Decide: componer con lo existente o crear una extensión documentada.
+4. Escribe un plan corto: objetivo, piezas, archivos, riesgos y validación.
+
+## Reglas no negociables
+
+- No inventes tokens, colores, variantes ni clases.
+- No edites `tokens.css` ni `tailwind/globals.css`: ejecuta `npm run build`.
+- No uses hexadecimales ni `rgb()` en componentes; usa `var(--dsg-*)` o una clase.
+- No uses `hub-*` ni variables sin `--dsg-`.
+- No anides `.dsg-glass`; usa `.dsg-inset`.
+- No uses el color como única señal de estado.
+- No uses `div` con `onClick`; usa `<button>` o `<a href>`.
+- No uses el placeholder como etiqueta; usa `<label>` visible.
+- No crees un componente sin `README.md`, `preview.html` y entrada en `components/registry.json`.
+- No añadas dependencias sin justificar por qué la composición existente no alcanza.
+- Respeta foco visible, objetivo táctil 44×44 px (48 px en botones) y `prefers-reduced-motion`.
+
+## Validación
+
+```bash
+npm run build
+npm run validate
+```
+
+Revisa dark y light, teclado, reduced-motion, estados sin color y enlaces locales. El reporte final debe decir qué cambió, qué archivos se tocaron, cómo se validó y qué queda abierto.
+
+## Dónde profundizar
+
+- `docs/02-architecture.md`: capas y flujo de tokens.
+- `docs/03-tokens.md`: valores y temas.
+- `docs/04-components.md`: catálogo, composición y accesibilidad.
+- `docs/05-brand.md`: marca y assets.
+- `docs/06-ai-experience.md`: flujo, guardrails y recetas.
+- `docs/07-contributing.md`: extensión y releases.
