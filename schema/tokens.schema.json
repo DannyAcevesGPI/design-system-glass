@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-system-glass.dev/schema/tokens.schema.json",
+  "title": "Design System Glass tokens",
+  "type": "object",
+  "required": ["name", "version", "prefix", "cssVarPrefix", "color", "type", "spacing", "radius", "shadow", "backdrop"],
+  "properties": {
+    "name": { "type": "string", "const": "Design System Glass" },
+    "id": { "type": "string", "const": "dsg" },
+    "version": { "type": "integer", "minimum": 1 },
+    "prefix": { "type": "string", "const": "dsg" },
+    "cssVarPrefix": { "type": "string", "const": "--dsg-" },
+    "description": { "type": "string" },
+    "updated": { "type": "string", "format": "date" },
+    "status": { "enum": ["alpha", "beta", "stable", "deprecated"] },
+    "color": {
+      "type": "object",
+      "required": ["themes", "tokens"],
+      "properties": {
+        "themes": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["id", "name"],
+            "properties": { "id": { "enum": ["dark", "light"] }, "name": { "type": "string" } }
+          }
+        },
+        "tokens": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "value", "usage"],
+            "properties": {
+              "name": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": ["dark", "light"],
+                    "additionalProperties": false,
+                    "properties": { "dark": { "type": "string" }, "light": { "type": "string" } }
+                  },
+                  { "type": "string", "pattern": "^\\{[a-z0-9-]+\\}$" }
+                ]
+              },
+              "usage": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "type": {
+      "type": "object",
+      "required": ["families", "groups"],
+      "properties": {
+        "families": { "type": "object", "additionalProperties": { "type": "string" } },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "family", "styles"],
+            "properties": {
+              "name": { "type": "string" },
+              "family": { "type": "string" },
+              "styles": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "fontSize", "lineHeight", "fontWeight"],
+                  "properties": {
+                    "name": { "type": "string" },
+                    "fontSize": { "type": "string" },
+                    "lineHeight": { "type": ["number", "string"] },
+                    "fontWeight": { "type": ["number", "string"] },
+                    "letterSpacing": { "type": "string" },
+                    "sample": { "type": "string" },
+                    "usage": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "spacing": {
+      "type": "object",
+      "required": ["tokens"],
+      "properties": {
+        "note": { "type": "string" },
+        "tokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "value", "usage"],
+            "properties": {
+              "name": { "type": "string" },
+              "value": { "type": "string" },
+              "usage": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "radius": { "$ref": "#/$defs/tokenGroup" },
+    "shadow": {
+      "type": "object",
+      "required": ["tokens"],
+      "properties": {
+        "tokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "value", "usage"],
+            "properties": {
+              "name": { "type": "string" },
+              "value": {
+                "type": "object",
+                "required": ["dark", "light"],
+                "properties": { "dark": { "type": "string" }, "light": { "type": "string" } }
+              },
+              "usage": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "backdrop": {
+      "type": "object",
+      "required": ["tokens"],
+      "properties": {
+        "note": { "type": "string" },
+        "tokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "value", "usage"],
+            "properties": {
+              "name": { "type": "string" },
+              "value": { "type": "string" },
+              "usage": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "tokenGroup": {
+      "type": "object",
+      "required": ["tokens"],
+      "properties": {
+        "tokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "value", "usage"],
+            "properties": {
+              "name": { "type": "string" },
+              "value": { "type": "string" },
+              "usage": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

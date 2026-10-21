@@ -1,0 +1,104 @@
+/* Design System Glass — archivo generado por scripts/build.mjs desde tokens.json. No editar a mano. */
+
+:root, [data-theme="dark"] {
+  --dsg-canvas: #070b14;
+  --dsg-ink: #eef2f8;
+  --dsg-ink-muted: #aeb8ca;
+  --dsg-ink-subtle: #8c97ad;
+  --dsg-glass: rgba(255,255,255,0.055);
+  --dsg-glass-strong: rgba(255,255,255,0.10);
+  --dsg-glass-rim: rgba(255,255,255,0.12);
+  --dsg-glass-highlight: rgba(255,255,255,0.10);
+  --dsg-line: rgba(255,255,255,0.12);
+  --dsg-accent: #5cd2f0;
+  --dsg-accent-warm: #f5b451;
+  --dsg-on-accent: #04121a;
+  --dsg-success: #6ee7a8;
+  --dsg-warning: var(--dsg-accent-warm);
+  --dsg-danger: #ff8f80;
+  --dsg-admin: #b7a4ff;
+  --dsg-shadow-glass: inset 0 1px 0 rgba(255,255,255,0.10), 0 24px 48px -24px rgba(0,0,0,0.70);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --dsg-canvas: #ecf1fa;
+    --dsg-ink: #0b1222;
+    --dsg-ink-muted: #36425a;
+    --dsg-ink-subtle: #4d5970;
+    --dsg-glass: rgba(255,255,255,0.46);
+    --dsg-glass-strong: rgba(255,255,255,0.72);
+    --dsg-glass-rim: rgba(255,255,255,0.88);
+    --dsg-glass-highlight: #ffffff;
+    --dsg-line: rgba(15,23,42,0.11);
+    --dsg-accent: #0a6a86;
+    --dsg-accent-warm: #965700;
+    --dsg-on-accent: #ffffff;
+    --dsg-success: #0e7346;
+    --dsg-warning: var(--dsg-accent-warm);
+    --dsg-danger: #b3311e;
+    --dsg-admin: #5b3fd1;
+    --dsg-shadow-glass: inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(15,23,42,0.06), 0 0 0 0.5px rgba(15,23,42,0.10), 0 22px 46px -22px rgba(30,52,120,0.38);
+    color-scheme: light;
+  }
+}
+
+[data-theme="light"] {
+  --dsg-canvas: #ecf1fa;
+  --dsg-ink: #0b1222;
+  --dsg-ink-muted: #36425a;
+  --dsg-ink-subtle: #4d5970;
+  --dsg-glass: rgba(255,255,255,0.46);
+  --dsg-glass-strong: rgba(255,255,255,0.72);
+  --dsg-glass-rim: rgba(255,255,255,0.88);
+  --dsg-glass-highlight: #ffffff;
+  --dsg-line: rgba(15,23,42,0.11);
+  --dsg-accent: #0a6a86;
+  --dsg-accent-warm: #965700;
+  --dsg-on-accent: #ffffff;
+  --dsg-success: #0e7346;
+  --dsg-warning: var(--dsg-accent-warm);
+  --dsg-danger: #b3311e;
+  --dsg-admin: #5b3fd1;
+  --dsg-shadow-glass: inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(15,23,42,0.06), 0 0 0 0.5px rgba(15,23,42,0.10), 0 22px 46px -22px rgba(30,52,120,0.38);
+  color-scheme: light;
+}
+
+:root {
+  --dsg-font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --dsg-font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --dsg-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --dsg-space-1: 4px;
+  --dsg-space-2: 8px;
+  --dsg-space-3: 12px;
+  --dsg-space-4: 16px;
+  --dsg-space-5: 20px;
+  --dsg-space-6: 24px;
+  --dsg-space-7: 28px;
+  --dsg-space-10: 40px;
+  --dsg-space-14: 56px;
+  --dsg-radius-sm: 8px;
+  --dsg-radius-md: 14px;
+  --dsg-radius-lg: 18px;
+  --dsg-radius-xl: 22px;
+  --dsg-radius-2xl: 26px;
+  --dsg-radius-3xl: 32px;
+  --dsg-radius-full: 9999px;
+  --dsg-backdrop-glass: blur(22px) saturate(160%);
+  --dsg-backdrop-glass-light: blur(26px) saturate(190%);
+}
+
+.display-xl { font-family: var(--dsg-font-display); font-size: 96px; line-height: 0.95; font-weight: 700; letter-spacing: -0.035em; }
+.display-lg { font-family: var(--dsg-font-display); font-size: 52px; line-height: 1; font-weight: 700; letter-spacing: -0.03em; }
+.kpi { font-family: var(--dsg-font-display); font-size: 52px; line-height: 1; font-weight: 700; letter-spacing: -0.03em; }
+.heading-lg { font-family: var(--dsg-font-display); font-size: 28px; line-height: 1.15; font-weight: 700; letter-spacing: -0.015em; }
+.heading-md { font-family: var(--dsg-font-display); font-size: 24px; line-height: 1.2; font-weight: 700; letter-spacing: -0.01em; }
+.heading-sm { font-family: var(--dsg-font-display); font-size: 20px; line-height: 1.25; font-weight: 700; }
+.body-lg { font-family: var(--dsg-font-sans); font-size: 17px; line-height: 1.55; font-weight: 400; }
+.body { font-family: var(--dsg-font-sans); font-size: 15px; line-height: 1.5; font-weight: 400; }
+.body-sm { font-family: var(--dsg-font-sans); font-size: 14px; line-height: 1.5; font-weight: 400; }
+.caption { font-family: var(--dsg-font-sans); font-size: 13px; line-height: 1.45; font-weight: 400; }
+.label { font-family: var(--dsg-font-sans); font-size: 15px; line-height: 1.4; font-weight: 600; }
+.eyebrow { font-family: var(--dsg-font-mono); font-size: 12px; line-height: 1.3; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
+.overline { font-family: var(--dsg-font-mono); font-size: 11px; line-height: 1.3; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
